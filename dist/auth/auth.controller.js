@@ -15,51 +15,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
-const user_service_1 = require("../user/user.service");
-const bcrypt = require("bcryptjs");
 const register_dto_1 = require("./dto/register.dto");
-const jwt_1 = require("@nestjs/jwt");
 const auth_guard_1 = require("./guards/auth.guard");
+const login_dto_1 = require("./dto/login.dto");
 let AuthController = class AuthController {
-    constructor(authService, userService, jwtService) {
+    constructor(authService) {
         this.authService = authService;
-        this.userService = userService;
-        this.jwtService = jwtService;
     }
     async register(body) {
-        if (body.password !== body.password_confirm) {
-            throw new common_1.BadRequestException('Password do not match!');
-        }
-        const hashed = await bcrypt.hash(body.password, 12);
-        return this.userService.create({
-            first_name: body.first_name,
-            last_name: body.last_name,
-            email: body.email,
-            password: hashed,
-        });
+        return this.authService.register(body);
     }
-    async login(email, password, response) {
-        const user = await this.userService.findOne({ email });
-        if (!user) {
-            throw new common_1.NotFoundException('User not found');
-        }
-        if (!(await bcrypt.compare(password, user.password))) {
-            throw new common_1.BadRequestException('Invalid credentials');
-        }
-        const jwt = await this.jwtService.signAsync({ id: user.id });
-        response.cookie('jwt', jwt, { httpOnly: true });
-        return user;
+    async login(body, response) {
+        return this.authService.login(body, response);
     }
     async user(request) {
-        const cookie = request.cookies['jwt'];
-        const data = await this.jwtService.verifyAsync(cookie);
-        return this.userService.findOne({ id: data.id });
+        return this.authService.userData(request);
     }
     async logout(response) {
-        response.clearCookie('jwt');
-        return {
-            message: 'Success',
-        };
+        return this.authService.logout(response);
     }
 };
 __decorate([
@@ -71,11 +44,10 @@ __decorate([
 ], AuthController.prototype, "register", null);
 __decorate([
     (0, common_1.Post)('login'),
-    __param(0, (0, common_1.Body)('email')),
-    __param(1, (0, common_1.Body)('password')),
-    __param(2, (0, common_1.Res)({ passthrough: true })),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Res)({ passthrough: true })),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, Object]),
+    __metadata("design:paramtypes", [login_dto_1.LoginDto, Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "login", null);
 __decorate([
@@ -97,9 +69,7 @@ __decorate([
 ], AuthController.prototype, "logout", null);
 AuthController = __decorate([
     (0, common_1.Controller)(),
-    __metadata("design:paramtypes", [auth_service_1.AuthService,
-        user_service_1.UserService,
-        jwt_1.JwtService])
+    __metadata("design:paramtypes", [auth_service_1.AuthService])
 ], AuthController);
 exports.AuthController = AuthController;
 //# sourceMappingURL=auth.controller.js.map
