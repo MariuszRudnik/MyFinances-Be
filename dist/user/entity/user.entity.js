@@ -12,25 +12,44 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserEntity = void 0;
 const typeorm_1 = require("typeorm");
 const class_transformer_1 = require("class-transformer");
+const swagger_1 = require("@nestjs/swagger");
 let UserEntity = class UserEntity {
 };
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
-    __metadata("design:type", Number)
+    (0, swagger_1.ApiProperty)({
+        description: 'Primary key as User ID',
+    }),
+    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
+    __metadata("design:type", String)
 ], UserEntity.prototype, "id", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'User first name',
+        example: 'Mariusz'
+    }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], UserEntity.prototype, "first_name", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'User first last name',
+        example: 'Json'
+    }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], UserEntity.prototype, "last_name", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'User email address',
+        example: 'jhon.doe@gmail.com'
+    }),
     (0, typeorm_1.Column)({ unique: true }),
     __metadata("design:type", String)
 ], UserEntity.prototype, "email", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Hashed user password'
+    }),
     (0, typeorm_1.Column)(),
     (0, class_transformer_1.Exclude)(),
     __metadata("design:type", String)

@@ -34,11 +34,15 @@ let AuthService = class AuthService {
             throw new common_1.BadRequestException('Invalid credentials');
         }
         const jwt = await this.jwtService.signAsync({ id: user.id });
-        response.cookie('jwt', jwt, { httpOnly: true });
+        response.cookie('jwt', jwt, {
+            httpOnly: false,
+        });
         return user;
     }
     async register(body) {
-        const userByEmail = this.userRepository.findOneBy({ email: body.email });
+        const userByEmail = await this.userRepository.findOneBy({
+            email: body.email,
+        });
         if (userByEmail) {
             throw new common_1.HttpException('Email are taken', common_1.HttpStatus.UNPROCESSABLE_ENTITY);
         }
