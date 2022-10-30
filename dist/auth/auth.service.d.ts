@@ -7,8 +7,8 @@ export declare class AuthService {
     constructor(userRepository: Repository<UserEntity>, jwtService: JwtService);
     login(body: any, response: any): Promise<UserEntity>;
     register(body: any): Promise<{
-        first_name: any;
-        last_name: any;
+        firstName: any;
+        lastName: any;
         email: any;
         password: string;
     } & UserEntity>;

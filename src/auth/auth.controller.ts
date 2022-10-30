@@ -31,7 +31,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
   @ApiBody({
     description: 'This Api link created users',
-    type: UserUpdateDto,
+    type: RegisterDto,
   })
   @ApiCreatedResponse({
     description: 'Created user object as register.',

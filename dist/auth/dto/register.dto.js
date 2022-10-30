@@ -11,28 +11,53 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RegisterDto = void 0;
 const class_validator_1 = require("class-validator");
+const swagger_1 = require("@nestjs/swagger");
 class RegisterDto {
 }
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'User first name',
+        example: 'Mariusz',
+    }),
     __metadata("design:type", String)
-], RegisterDto.prototype, "first_name", void 0);
+], RegisterDto.prototype, "firstName", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'User first last name',
+        example: 'Json',
+    }),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], RegisterDto.prototype, "last_name", void 0);
+], RegisterDto.prototype, "lastName", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'User email address',
+        example: 'jhon.doe@gmail.com',
+    }),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsEmail)(),
     __metadata("design:type", String)
 ], RegisterDto.prototype, "email", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'User password',
+        example: '123',
+    }),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], RegisterDto.prototype, "password", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'User password',
+        example: '123',
+    }),
+    (0, swagger_1.ApiProperty)({
+        description: 'Repeat the password',
+        example: '123',
+    }),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], RegisterDto.prototype, "password_confirm", void 0);
+], RegisterDto.prototype, "passwordConfirm", void 0);
 exports.RegisterDto = RegisterDto;
 //# sourceMappingURL=register.dto.js.map

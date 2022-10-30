@@ -16,21 +16,21 @@ class UserUpdateDto {
 __decorate([
     (0, swagger_1.ApiProperty)({
         description: 'Name user',
-        example: 'Mariusz'
+        example: 'Mariusz',
     }),
     __metadata("design:type", String)
-], UserUpdateDto.prototype, "first_name", void 0);
+], UserUpdateDto.prototype, "firstName", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
         description: 'Last name user',
-        example: 'Json'
+        example: 'Json',
     }),
     __metadata("design:type", String)
-], UserUpdateDto.prototype, "last_name", void 0);
+], UserUpdateDto.prototype, "lastName", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
         description: 'Email user',
-        example: 'mariusz@wp.pl'
+        example: 'mariusz@wp.pl',
     }),
     __metadata("design:type", String)
 ], UserUpdateDto.prototype, "email", void 0);

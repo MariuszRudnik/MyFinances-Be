@@ -7,8 +7,8 @@ export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);
     register(body: RegisterDto): Promise<{
-        first_name: any;
-        last_name: any;
+        firstName: any;
+        lastName: any;
         email: any;
         password: string;
     } & UserEntity>;

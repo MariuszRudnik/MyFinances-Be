@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { Exclude } from 'class-transformer';
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('users')
 export class UserEntity {
@@ -12,27 +12,27 @@ export class UserEntity {
 
   @ApiProperty({
     description: 'User first name',
-    example: 'Mariusz'
+    example: 'Mariusz',
   })
   @Column()
-  first_name: string;
+  firstName: string;
 
   @ApiProperty({
     description: 'User first last name',
-    example: 'Json'
+    example: 'Json',
   })
   @Column()
-  last_name: string;
+  lastName: string;
 
   @ApiProperty({
     description: 'User email address',
-    example:'jhon.doe@gmail.com'
+    example: 'jhon.doe@gmail.com',
   })
   @Column({ unique: true })
   email: string;
 
   @ApiProperty({
-    description: 'Hashed user password'
+    description: 'Hashed user password',
   })
   @Column()
   @Exclude()

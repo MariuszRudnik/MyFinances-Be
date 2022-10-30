@@ -46,13 +46,13 @@ let AuthService = class AuthService {
         if (userByEmail) {
             throw new common_1.HttpException('Email are taken', common_1.HttpStatus.UNPROCESSABLE_ENTITY);
         }
-        if (body.password !== body.password_confirm) {
+        if (body.password !== body.passwordConfirm) {
             throw new common_1.BadRequestException('Password do not match!');
         }
         const hashed = await bcrypt.hash(body.password, 12);
         return this.userRepository.save({
-            first_name: body.first_name,
-            last_name: body.last_name,
+            firstName: body.firstName,
+            lastName: body.lastName,
             email: body.email,
             password: hashed,
         });

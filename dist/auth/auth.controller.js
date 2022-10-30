@@ -20,7 +20,6 @@ const auth_guard_1 = require("./guards/auth.guard");
 const login_dto_1 = require("./dto/login.dto");
 const swagger_1 = require("@nestjs/swagger");
 const user_entity_1 = require("../user/entity/user.entity");
-const user_update_dto_1 = require("../user/dto/user-update.dto");
 let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
@@ -41,7 +40,7 @@ let AuthController = class AuthController {
 __decorate([
     (0, swagger_1.ApiBody)({
         description: 'This Api link created users',
-        type: user_update_dto_1.UserUpdateDto,
+        type: register_dto_1.RegisterDto,
     }),
     (0, swagger_1.ApiCreatedResponse)({
         description: 'Created user object as register.',

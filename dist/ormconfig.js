@@ -2,11 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const config = {
     type: 'mysql',
-    host: 'db',
-    port: 3306,
+    host: 'localhost',
+    port: 8889,
     username: 'root',
     password: 'root',
-    database: 'admin',
+    database: 'nowy',
     entities: [__dirname + '/**/*.entity.{js,ts}'],
     synchronize: true,
 };
