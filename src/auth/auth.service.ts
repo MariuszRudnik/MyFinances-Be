@@ -31,7 +31,7 @@ export class AuthService {
     const jwt = await this.jwtService.signAsync({ id: user.id });
 
     response.cookie('jwt', jwt, {
-      httpOnly: false,
+      httpOnly: true,
     });
     return user;
   }
@@ -61,6 +61,7 @@ export class AuthService {
       //TODO: delete password when I are finish !!
     });
   }
+
   async userData(request) {
     const cookie = request.cookies['jwt'];
     const data = await this.jwtService.verifyAsync(cookie);

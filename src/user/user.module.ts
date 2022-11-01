@@ -3,6 +3,8 @@ import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './entity/user.entity';
+import { JwtModule } from '@nestjs/jwt';
+import { JWT_SECRET } from '../utils/config';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity])],
