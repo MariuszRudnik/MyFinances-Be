@@ -19,6 +19,7 @@ const create_wallet_dto_1 = require("./dto/create-wallet.dto");
 const update_wallet_dto_1 = require("./dto/update-wallet.dto");
 const swagger_1 = require("@nestjs/swagger");
 const auth_guard_1 = require("../auth/guards/auth.guard");
+const wallet_entity_1 = require("./entities/wallet.entity");
 let WalletController = class WalletController {
     constructor(walletService) {
         this.walletService = walletService;
@@ -43,6 +44,13 @@ __decorate([
     (0, swagger_1.ApiBody)({
         description: 'This Api link created new wallet',
         type: create_wallet_dto_1.CreateWalletDto,
+    }),
+    (0, swagger_1.ApiCreatedResponse)({
+        description: 'User can add new wallet',
+        type: wallet_entity_1.WalletEntity,
+    }),
+    (0, swagger_1.ApiBadRequestResponse)({
+        description: 'You dont have entitlements to add new wallet',
     }),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor),
@@ -82,6 +90,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], WalletController.prototype, "remove", null);
 WalletController = __decorate([
+    (0, swagger_1.ApiTags)('Wallet'),
     (0, common_1.Controller)('wallet'),
     __metadata("design:paramtypes", [wallet_service_1.WalletService])
 ], WalletController);

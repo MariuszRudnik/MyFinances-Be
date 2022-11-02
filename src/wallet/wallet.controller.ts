@@ -14,10 +14,17 @@ import {
 import { WalletService } from './wallet.service';
 import { CreateWalletDto } from './dto/create-wallet.dto';
 import { UpdateWalletDto } from './dto/update-wallet.dto';
-import { ApiBody } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiBody,
+  ApiCreatedResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Request } from 'express';
 import { AuthGuard } from '../auth/guards/auth.guard';
+import { WalletEntity } from './entities/wallet.entity';
 
+@ApiTags('Wallet')
 @Controller('wallet')
 export class WalletController {
   constructor(private readonly walletService: WalletService) {}
@@ -25,6 +32,13 @@ export class WalletController {
   @ApiBody({
     description: 'This Api link created new wallet',
     type: CreateWalletDto,
+  })
+  @ApiCreatedResponse({
+    description: 'User can add new wallet',
+    type: WalletEntity,
+  })
+  @ApiBadRequestResponse({
+    description: 'You dont have entitlements to add new wallet',
   })
   @UseGuards(AuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)

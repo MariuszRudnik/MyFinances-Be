@@ -28,24 +28,38 @@ let WalletService = class WalletService {
         const data = await this.jwtService.verifyAsync(cookie);
         const { nameOfWallet, typeOfCurrency, initialState } = createWalletDto;
         const initialStateNumber = Number(initialState);
-        const log = await this.walletRepository.find({
-            select: {
-                id: data.id,
+        const userID = data.id;
+        let numberWalletUser = 1;
+        const listOfWallet = await this.walletRepository.find({
+            relations: ['user'],
+            where: {
+                user: {
+                    id: userID,
+                },
             },
         });
+        for (let i = 1; i < listOfWallet.length + 1; i++) {
+            const checkOfNumberIfItExists = listOfWallet.find((cur) => cur.numberWalletUser === i);
+            if (!checkOfNumberIfItExists) {
+                numberWalletUser = i;
+                break;
+            }
+        }
         const wallet = {
             user: data.id,
-            numberWalletUser: log.length + 1,
+            numberWalletUser: numberWalletUser,
             nameOfWallet,
             typeOfCurrency,
             initialState: initialStateNumber,
         };
-        console.log(wallet);
         await this.walletRepository.save(wallet);
         return wallet;
     }
     async findAll() {
-        const all = await this.walletRepository.find();
+        const all = await this.walletRepository.find({
+            relations: ['user'],
+        });
+        console.log(all);
         return all;
     }
     findOne(id) {
