@@ -29,7 +29,7 @@ let WalletService = class WalletService {
         const { nameOfWallet, typeOfCurrency, initialState } = createWalletDto;
         const initialStateNumber = Number(initialState);
         const userID = data.id;
-        let numberWalletUser = 1;
+        let numberWalletUser = 0;
         const listOfWallet = await this.walletRepository.find({
             relations: ['user'],
             where: {
@@ -55,15 +55,42 @@ let WalletService = class WalletService {
         await this.walletRepository.save(wallet);
         return wallet;
     }
-    async findAll() {
-        const all = await this.walletRepository.find({
-            relations: ['user'],
+    async findWallet(numberOfWallet, request) {
+        const number = Number(numberOfWallet);
+        const cookie = request.cookies['jwt'];
+        const data = await this.jwtService.verifyAsync(cookie);
+        const userID = data.id;
+        const listOfWallet = await this.walletRepository.find({
+            where: {
+                user: {
+                    id: userID,
+                },
+            },
         });
-        console.log(all);
-        return all;
+        const wallet = await listOfWallet.find((cut) => cut.numberWalletUser === number);
+        return wallet;
     }
-    findOne(id) {
-        return `This action returns a #${id} wallet`;
+    async findAllWallet(request) {
+        const cookie = request.cookies['jwt'];
+        const data = await this.jwtService.verifyAsync(cookie);
+        const userID = data.id;
+        let wallets = [];
+        const listOfWallet = await this.walletRepository.find({
+            where: {
+                user: {
+                    id: userID,
+                },
+            },
+        });
+        for (const element of listOfWallet) {
+            const { numberWalletUser, nameOfWallet, typeOfCurrency } = element;
+            wallets.push({
+                numberWalletUser,
+                nameOfWallet,
+                typeOfCurrency,
+            });
+        }
+        return wallets;
     }
     update(id, updateWalletDto) {
         return `This action updates a #${id} wallet`;

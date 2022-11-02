@@ -47,14 +47,21 @@ export class WalletController {
     return this.walletService.create(createWalletDto, request);
   }
 
+  @UseGuards(AuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
   @Get()
-  findAll() {
-    return this.walletService.findAll();
+  findAllWallet(@Req() request: Request) {
+    return this.walletService.findAllWallet(request);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.walletService.findOne(+id);
+  @UseGuards(AuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get(':numberWallet')
+  findWallet(
+    @Param('numberWallet') numberOfWallet: string,
+    @Req() request: Request,
+  ) {
+    return this.walletService.findWallet(numberOfWallet, request);
   }
 
   @Patch(':id')

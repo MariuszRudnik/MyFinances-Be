@@ -9,8 +9,8 @@ export declare class WalletService {
     private jwtService;
     constructor(walletRepository: Repository<WalletEntity>, jwtService: JwtService);
     create(createWalletDto: CreateWalletDto, request: any): Promise<addWalletType>;
-    findAll(): Promise<WalletEntity[]>;
-    findOne(id: number): string;
+    findWallet(numberOfWallet: any, request: any): Promise<WalletEntity>;
+    findAllWallet(request: any): Promise<any[]>;
     update(id: number, updateWalletDto: UpdateWalletDto): string;
     remove(id: number): string;
 }

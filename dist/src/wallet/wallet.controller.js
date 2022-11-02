@@ -27,11 +27,11 @@ let WalletController = class WalletController {
     create(createWalletDto, request) {
         return this.walletService.create(createWalletDto, request);
     }
-    findAll() {
-        return this.walletService.findAll();
+    findAllWallet(request) {
+        return this.walletService.findAllWallet(request);
     }
-    findOne(id) {
-        return this.walletService.findOne(+id);
+    findWallet(numberOfWallet, request) {
+        return this.walletService.findWallet(numberOfWallet, request);
     }
     update(id, updateWalletDto) {
         return this.walletService.update(+id, updateWalletDto);
@@ -62,18 +62,24 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], WalletController.prototype, "create", null);
 __decorate([
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor),
     (0, common_1.Get)(),
+    __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
-], WalletController.prototype, "findAll", null);
+], WalletController.prototype, "findAllWallet", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor),
+    (0, common_1.Get)(':numberWallet'),
+    __param(0, (0, common_1.Param)('numberWallet')),
+    __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", void 0)
-], WalletController.prototype, "findOne", null);
+], WalletController.prototype, "findWallet", null);
 __decorate([
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),

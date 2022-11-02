@@ -6,6 +6,7 @@ import { WalletEntity } from './entities/wallet.entity';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { addWalletType } from '../../types/wallet/wallet';
+import { elementAt } from 'rxjs';
 
 @Injectable()
 export class WalletService {
@@ -21,7 +22,7 @@ export class WalletService {
     const { nameOfWallet, typeOfCurrency, initialState } = createWalletDto;
     const initialStateNumber = Number(initialState);
     const userID = data.id;
-    let numberWalletUser = 1;
+    let numberWalletUser = 0;
 
     const listOfWallet = await this.walletRepository.find({
       relations: ['user'],
@@ -31,7 +32,6 @@ export class WalletService {
         },
       },
     });
-
     for (let i = 1; i < listOfWallet.length + 1; i++) {
       const checkOfNumberIfItExists = listOfWallet.find(
         (cur) => cur.numberWalletUser === i,
@@ -41,7 +41,6 @@ export class WalletService {
         break;
       }
     }
-
     const wallet: addWalletType = {
       user: data.id,
       numberWalletUser: numberWalletUser,
@@ -53,16 +52,48 @@ export class WalletService {
     return wallet;
   }
 
-  async findAll() {
-    const all = await this.walletRepository.find({
-      relations: ['user'],
+  async findWallet(numberOfWallet, request) {
+    const number = Number(numberOfWallet);
+    const cookie = request.cookies['jwt'];
+    const data = await this.jwtService.verifyAsync(cookie);
+    const userID = data.id;
+
+    const listOfWallet = await this.walletRepository.find({
+      where: {
+        user: {
+          id: userID,
+        },
+      },
     });
-    console.log(all);
-    return all;
+    const wallet = await listOfWallet.find(
+      (cut) => cut.numberWalletUser === number,
+    );
+    return wallet;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} wallet`;
+  async findAllWallet(request) {
+    const cookie = request.cookies['jwt'];
+    const data = await this.jwtService.verifyAsync(cookie);
+    const userID = data.id;
+    let wallets = [];
+
+    const listOfWallet = await this.walletRepository.find({
+      where: {
+        user: {
+          id: userID,
+        },
+      },
+    });
+
+    for (const element of listOfWallet) {
+      const { numberWalletUser, nameOfWallet, typeOfCurrency } = element;
+      wallets.push({
+        numberWalletUser,
+        nameOfWallet,
+        typeOfCurrency,
+      });
+    }
+    return wallets;
   }
 
   update(id: number, updateWalletDto: UpdateWalletDto) {

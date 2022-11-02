@@ -7,8 +7,8 @@ export declare class WalletController {
     private readonly walletService;
     constructor(walletService: WalletService);
     create(createWalletDto: CreateWalletDto, request: Request): Promise<import("../../types").addWalletType>;
-    findAll(): Promise<WalletEntity[]>;
-    findOne(id: string): string;
+    findAllWallet(request: Request): Promise<any[]>;
+    findWallet(numberOfWallet: string, request: Request): Promise<WalletEntity>;
     update(id: string, updateWalletDto: UpdateWalletDto): string;
     remove(id: string): string;
 }
