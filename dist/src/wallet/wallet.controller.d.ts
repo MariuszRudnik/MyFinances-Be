@@ -10,5 +10,6 @@ export declare class WalletController {
     findAllWallet(request: Request): Promise<any[]>;
     findWallet(numberOfWallet: string, request: Request): Promise<WalletEntity>;
     update(id: string, updateWalletDto: UpdateWalletDto): string;
+    addCategory(numberOfWallet: string, request: Request): Promise<WalletEntity[]>;
     remove(id: string): string;
 }

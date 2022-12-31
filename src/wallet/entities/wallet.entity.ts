@@ -12,6 +12,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { JoinColumn, JoinTable } from 'typeorm/browser';
 import { UserEntity } from '../../user/entity/user.entity';
 import { Transaction } from '../../transactions/entities/transaction.entity';
+import { ParentCategoriesEntity } from "./parentCategories.entity";
+import { CategoryEntity } from "./category.entity";
 
 @Entity('wallet')
 export class WalletEntity extends BaseEntity {
@@ -20,12 +22,6 @@ export class WalletEntity extends BaseEntity {
   })
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
-  // @ApiProperty({
-  //   description: 'User ID',
-  // })
-  // @Column()
-  // userId: string;
 
   @ApiProperty({
     description: "Number of the user's  wallet",
@@ -60,4 +56,7 @@ export class WalletEntity extends BaseEntity {
 
   @OneToMany(() => Transaction, (transaction) => transaction.id)
   transaction: Transaction;
+
+  @OneToMany(()=>ParentCategoriesEntity, (parentCategory)=> parentCategory.wallet)
+  parentCategory: ParentCategoriesEntity[]
 }

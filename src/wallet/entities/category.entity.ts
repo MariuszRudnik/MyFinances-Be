@@ -1,5 +1,6 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { UserEntity } from '../../user/entity/user.entity';
+import { ParentCategoriesEntity } from "./parentCategories.entity";
 
 @Entity('category')
 export class CategoryEntity {
@@ -7,8 +8,13 @@ export class CategoryEntity {
   id: string;
 
   @Column()
-  category: string;
+  categoryName: string;
 
-  @ManyToOne(() => UserEntity, (user) => user.category)
-  user: UserEntity;
+
+
+  // @ManyToOne(() => UserEntity, (user) => user.category)
+  // user: UserEntity;
+
+  @ManyToOne(()=> ParentCategoriesEntity, (parentCategory)=> parentCategory.category)
+  parentCategory: ParentCategoriesEntity
 }

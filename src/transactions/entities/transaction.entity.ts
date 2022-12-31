@@ -22,6 +22,9 @@ export class Transaction {
   category: string;
 
   @Column()
+  parentCategories: string;
+
+  @Column()
   price: number;
 
   @Column({

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { CreateWalletDto } from './dto/create-wallet.dto';
 import { UpdateWalletDto } from './dto/update-wallet.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -6,7 +6,6 @@ import { WalletEntity } from './entities/wallet.entity';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { addWalletType } from '../../types/wallet/wallet';
-import { elementAt } from 'rxjs';
 
 @Injectable()
 export class WalletService {
@@ -102,5 +101,27 @@ export class WalletService {
 
   remove(id: number) {
     return `This action removes a #${id} wallet`;
+  }
+
+  async addCategory(numberOfWallet, request) {
+    const cookie = request.cookies['jwt'];
+    const data = await this.jwtService.verifyAsync(cookie);
+    const userID = data.id;
+    const listOfWallet = await this.walletRepository.find({
+      where: {
+        user: {
+          id: userID,
+        },
+      },
+    });
+    const wallet = listOfWallet.filter(
+      (item)=> item.numberWalletUser == numberOfWallet)
+
+    if (wallet.length > 1 || wallet.length == 0 ){
+      throw new BadRequestException('Something bad happened')
+    }
+    console.log(wallet.length)
+
+    return wallet
   }
 }

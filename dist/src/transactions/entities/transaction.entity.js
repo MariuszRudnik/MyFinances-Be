@@ -30,6 +30,10 @@ __decorate([
 ], Transaction.prototype, "category", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Transaction.prototype, "parentCategories", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], Transaction.prototype, "price", void 0);
 __decorate([

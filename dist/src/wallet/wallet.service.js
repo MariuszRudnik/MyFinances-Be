@@ -98,6 +98,24 @@ let WalletService = class WalletService {
     remove(id) {
         return `This action removes a #${id} wallet`;
     }
+    async addCategory(numberOfWallet, request) {
+        const cookie = request.cookies['jwt'];
+        const data = await this.jwtService.verifyAsync(cookie);
+        const userID = data.id;
+        const listOfWallet = await this.walletRepository.find({
+            where: {
+                user: {
+                    id: userID,
+                },
+            },
+        });
+        const wallet = listOfWallet.filter((item) => item.numberWalletUser == numberOfWallet);
+        if (wallet.length > 1 || wallet.length == 0) {
+            throw new common_1.BadRequestException('Something bad happened');
+        }
+        console.log(wallet.length);
+        return wallet;
+    }
 };
 WalletService = __decorate([
     (0, common_1.Injectable)(),

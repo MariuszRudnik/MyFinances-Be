@@ -9,25 +9,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CategoryEntity = void 0;
+exports.ParentCategoriesEntity = void 0;
 const typeorm_1 = require("typeorm");
-const parentCategories_entity_1 = require("./parentCategories.entity");
-let CategoryEntity = class CategoryEntity {
+const wallet_entity_1 = require("./wallet.entity");
+const category_entity_1 = require("./category.entity");
+let ParentCategoriesEntity = class ParentCategoriesEntity {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
     __metadata("design:type", String)
-], CategoryEntity.prototype, "id", void 0);
+], ParentCategoriesEntity.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], CategoryEntity.prototype, "categoryName", void 0);
+], ParentCategoriesEntity.prototype, "name", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => parentCategories_entity_1.ParentCategoriesEntity, (parentCategory) => parentCategory.category),
-    __metadata("design:type", parentCategories_entity_1.ParentCategoriesEntity)
-], CategoryEntity.prototype, "parentCategory", void 0);
-CategoryEntity = __decorate([
-    (0, typeorm_1.Entity)('category')
-], CategoryEntity);
-exports.CategoryEntity = CategoryEntity;
-//# sourceMappingURL=category.entity.js.map
+    (0, typeorm_1.ManyToOne)(() => wallet_entity_1.WalletEntity, (wallet) => wallet.parentCategory),
+    __metadata("design:type", wallet_entity_1.WalletEntity)
+], ParentCategoriesEntity.prototype, "wallet", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => category_entity_1.CategoryEntity, (category) => category.parentCategory),
+    __metadata("design:type", Array)
+], ParentCategoriesEntity.prototype, "category", void 0);
+ParentCategoriesEntity = __decorate([
+    (0, typeorm_1.Entity)()
+], ParentCategoriesEntity);
+exports.ParentCategoriesEntity = ParentCategoriesEntity;
+//# sourceMappingURL=parentCategories.entity.js.map

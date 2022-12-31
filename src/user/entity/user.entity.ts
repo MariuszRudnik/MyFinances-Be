@@ -49,6 +49,6 @@ export class UserEntity extends BaseEntity {
   @OneToMany(() => WalletEntity, (wallet) => wallet.id)
   wallet: WalletEntity[];
 
-  @OneToMany(() => CategoryEntity, (category) => category.id)
-  category: CategoryEntity[];
+  // @OneToMany(() => CategoryEntity, (category) => category.id)
+  // category: CategoryEntity[];
 }

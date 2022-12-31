@@ -14,7 +14,6 @@ const typeorm_1 = require("typeorm");
 const class_transformer_1 = require("class-transformer");
 const swagger_1 = require("@nestjs/swagger");
 const wallet_entity_1 = require("../../wallet/entities/wallet.entity");
-const category_entity_1 = require("../../wallet/entities/category.entity");
 let UserEntity = class UserEntity extends typeorm_1.BaseEntity {
 };
 __decorate([
@@ -60,10 +59,6 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => wallet_entity_1.WalletEntity, (wallet) => wallet.id),
     __metadata("design:type", Array)
 ], UserEntity.prototype, "wallet", void 0);
-__decorate([
-    (0, typeorm_1.OneToMany)(() => category_entity_1.CategoryEntity, (category) => category.id),
-    __metadata("design:type", Array)
-], UserEntity.prototype, "category", void 0);
 UserEntity = __decorate([
     (0, typeorm_1.Entity)('users')
 ], UserEntity);

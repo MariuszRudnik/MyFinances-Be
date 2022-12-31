@@ -36,6 +36,9 @@ let WalletController = class WalletController {
     update(id, updateWalletDto) {
         return this.walletService.update(+id, updateWalletDto);
     }
+    addCategory(numberOfWallet, request) {
+        return this.walletService.addCategory(numberOfWallet, request);
+    }
     remove(id) {
         return this.walletService.remove(+id);
     }
@@ -88,6 +91,16 @@ __decorate([
     __metadata("design:paramtypes", [String, update_wallet_dto_1.UpdateWalletDto]),
     __metadata("design:returntype", void 0)
 ], WalletController.prototype, "update", null);
+__decorate([
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor),
+    (0, common_1.Post)('addParentCategory/:numberWallet'),
+    __param(0, (0, common_1.Param)('numberWallet')),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", void 0)
+], WalletController.prototype, "addCategory", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),

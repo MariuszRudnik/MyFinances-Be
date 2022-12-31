@@ -64,9 +64,20 @@ export class WalletController {
     return this.walletService.findWallet(numberOfWallet, request);
   }
 
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateWalletDto: UpdateWalletDto) {
     return this.walletService.update(+id, updateWalletDto);
+  }
+
+  @UseGuards(AuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Post('addParentCategory/:numberWallet')
+  addCategory(
+    @Param('numberWallet') numberOfWallet: string,
+    @Req() request: Request,
+  ) {
+    return this.walletService.addCategory(numberOfWallet, request);
   }
 
   @Delete(':id')

@@ -1,6 +1,6 @@
-import { UserEntity } from '../../user/entity/user.entity';
+import { ParentCategoriesEntity } from "./parentCategories.entity";
 export declare class CategoryEntity {
     id: string;
-    category: string;
-    user: UserEntity;
+    categoryName: string;
+    parentCategory: ParentCategoriesEntity;
 }
