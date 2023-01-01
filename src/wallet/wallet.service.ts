@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateWalletDto } from './dto/create-wallet.dto';
 import { UpdateWalletDto } from './dto/update-wallet.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -6,12 +6,19 @@ import { WalletEntity } from './entities/wallet.entity';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { addWalletType } from '../../types/wallet/wallet';
+import { CategoryEntity } from './entities/category.entity';
+import { ParentCategoriesEntity } from './entities/parentCategories.entity';
+import { AddParentCategoryDto } from './dto/add-parent-category.dto';
 
 @Injectable()
 export class WalletService {
   constructor(
     @InjectRepository(WalletEntity)
     private readonly walletRepository: Repository<WalletEntity>,
+    @InjectRepository(CategoryEntity)
+    private readonly categoryRepository: Repository<CategoryEntity>,
+    @InjectRepository(ParentCategoriesEntity)
+    private readonly parenCategoryRepository: Repository<any>,
     private jwtService: JwtService,
   ) {}
 
@@ -75,7 +82,6 @@ export class WalletService {
     const data = await this.jwtService.verifyAsync(cookie);
     const userID = data.id;
     let wallets = [];
-
     const listOfWallet = await this.walletRepository.find({
       where: {
         user: {
@@ -83,7 +89,6 @@ export class WalletService {
         },
       },
     });
-
     for (const element of listOfWallet) {
       const { numberWalletUser, nameOfWallet, typeOfCurrency } = element;
       wallets.push({
@@ -103,7 +108,7 @@ export class WalletService {
     return `This action removes a #${id} wallet`;
   }
 
-  async addCategory(numberOfWallet, request) {
+  async addParentCategory(numberOfCategory, request, body) {
     const cookie = request.cookies['jwt'];
     const data = await this.jwtService.verifyAsync(cookie);
     const userID = data.id;
@@ -115,13 +120,45 @@ export class WalletService {
       },
     });
     const wallet = listOfWallet.filter(
-      (item)=> item.numberWalletUser == numberOfWallet)
+      (item) => item.numberWalletUser == numberOfCategory,
+    );
 
-    if (wallet.length > 1 || wallet.length == 0 ){
-      throw new BadRequestException('Something bad happened')
+    if (wallet.length > 1 || wallet.length == 0) {
+      throw new BadRequestException('Something bad happened');
     }
-    console.log(wallet.length)
 
-    return wallet
+    return this.parenCategoryRepository.save({
+      name: body.name,
+      wallet: wallet[0].id,
+    });
+  }
+
+  async addCategory(request, body) {
+    return body;
+  }
+
+  async getParentCategory(request, numberOfCategory) {
+    const cookie = request.cookies['jwt'];
+    const data = await this.jwtService.verifyAsync(cookie);
+    const userID = data.id;
+    const listOfWallet = await this.walletRepository.find({
+      where: {
+        user: {
+          id: userID,
+        },
+      },
+    });
+    const wallet = listOfWallet.filter(
+      (item) => item.numberWalletUser == numberOfCategory,
+    );
+    const category = await this.parenCategoryRepository.find({
+      where: {
+        wallet: {
+          id: wallet[0].id,
+        },
+      },
+    });
+
+    return category;
   }
 }

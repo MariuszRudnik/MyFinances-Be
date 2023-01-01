@@ -18,9 +18,13 @@ const typeorm_1 = require("@nestjs/typeorm");
 const wallet_entity_1 = require("./entities/wallet.entity");
 const typeorm_2 = require("typeorm");
 const jwt_1 = require("@nestjs/jwt");
+const category_entity_1 = require("./entities/category.entity");
+const parentCategories_entity_1 = require("./entities/parentCategories.entity");
 let WalletService = class WalletService {
-    constructor(walletRepository, jwtService) {
+    constructor(walletRepository, categoryRepository, parenCategoryRepository, jwtService) {
         this.walletRepository = walletRepository;
+        this.categoryRepository = categoryRepository;
+        this.parenCategoryRepository = parenCategoryRepository;
         this.jwtService = jwtService;
     }
     async create(createWalletDto, request) {
@@ -98,7 +102,7 @@ let WalletService = class WalletService {
     remove(id) {
         return `This action removes a #${id} wallet`;
     }
-    async addCategory(numberOfWallet, request) {
+    async addParentCategory(numberOfCategory, request, body) {
         const cookie = request.cookies['jwt'];
         const data = await this.jwtService.verifyAsync(cookie);
         const userID = data.id;
@@ -109,18 +113,48 @@ let WalletService = class WalletService {
                 },
             },
         });
-        const wallet = listOfWallet.filter((item) => item.numberWalletUser == numberOfWallet);
+        const wallet = listOfWallet.filter((item) => item.numberWalletUser == numberOfCategory);
         if (wallet.length > 1 || wallet.length == 0) {
             throw new common_1.BadRequestException('Something bad happened');
         }
-        console.log(wallet.length);
-        return wallet;
+        return this.parenCategoryRepository.save({
+            name: body.name,
+            wallet: wallet[0].id,
+        });
+    }
+    async addCategory(request, body) {
+        return body;
+    }
+    async getParentCategory(request, numberOfCategory) {
+        const cookie = request.cookies['jwt'];
+        const data = await this.jwtService.verifyAsync(cookie);
+        const userID = data.id;
+        const listOfWallet = await this.walletRepository.find({
+            where: {
+                user: {
+                    id: userID,
+                },
+            },
+        });
+        const wallet = listOfWallet.filter((item) => item.numberWalletUser == numberOfCategory);
+        const category = await this.parenCategoryRepository.find({
+            where: {
+                wallet: {
+                    id: wallet[0].id,
+                },
+            },
+        });
+        return category;
     }
 };
 WalletService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(wallet_entity_1.WalletEntity)),
+    __param(1, (0, typeorm_1.InjectRepository)(category_entity_1.CategoryEntity)),
+    __param(2, (0, typeorm_1.InjectRepository)(parentCategories_entity_1.ParentCategoriesEntity)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
+        typeorm_2.Repository,
         jwt_1.JwtService])
 ], WalletService);
 exports.WalletService = WalletService;

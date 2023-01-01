@@ -23,11 +23,44 @@ import {
 import { Request } from 'express';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { WalletEntity } from './entities/wallet.entity';
+import { AddParentCategoryDto } from './dto/add-parent-category.dto';
 
 @ApiTags('Wallet')
 @Controller('wallet')
 export class WalletController {
   constructor(private readonly walletService: WalletService) {}
+
+  @UseGuards(AuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Post('addParentCategory/:numberOfCategory')
+  addParentCategory(
+    @Param('numberOfCategory') numberOfCategory: string,
+    @Req() request: Request,
+    @Body() body: AddParentCategoryDto,
+  ) {
+    return this.walletService.addParentCategory(
+      numberOfCategory,
+      request,
+      body,
+    );
+  }
+
+  @UseGuards(AuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get('addParentCategory/:numberOfCategory')
+  getParentCategory(
+    @Req() request: Request,
+    @Param('numberOfCategory') numberOfCategory: string,
+  ) {
+    return this.walletService.getParentCategory(request, numberOfCategory);
+  }
+
+  @UseGuards(AuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Post('addCategory')
+  addCategory(@Req() request: Request, @Body() body: AddParentCategoryDto) {
+    return this.walletService.addCategory(request, body);
+  }
 
   @ApiBody({
     description: 'This Api link created new wallet',
@@ -64,20 +97,9 @@ export class WalletController {
     return this.walletService.findWallet(numberOfWallet, request);
   }
 
-
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateWalletDto: UpdateWalletDto) {
     return this.walletService.update(+id, updateWalletDto);
-  }
-
-  @UseGuards(AuthGuard)
-  @UseInterceptors(ClassSerializerInterceptor)
-  @Post('addParentCategory/:numberWallet')
-  addCategory(
-    @Param('numberWallet') numberOfWallet: string,
-    @Req() request: Request,
-  ) {
-    return this.walletService.addCategory(numberOfWallet, request);
   }
 
   @Delete(':id')

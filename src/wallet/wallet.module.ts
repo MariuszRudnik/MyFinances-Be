@@ -7,6 +7,8 @@ import { WalletEntity } from './entities/wallet.entity';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { JwtModule } from '@nestjs/jwt';
 import { JWT_SECRET } from '../utils/config';
+import { ParentCategoriesEntity } from './entities/parentCategories.entity';
+import { CategoryEntity } from './entities/category.entity';
 
 @Module({
   imports: [
@@ -14,7 +16,11 @@ import { JWT_SECRET } from '../utils/config';
       secret: JWT_SECRET,
       signOptions: { expiresIn: '1d' },
     }),
-    TypeOrmModule.forFeature([WalletEntity]),
+    TypeOrmModule.forFeature([
+      WalletEntity,
+      ParentCategoriesEntity,
+      CategoryEntity,
+    ]),
   ],
   controllers: [WalletController],
   providers: [WalletService],

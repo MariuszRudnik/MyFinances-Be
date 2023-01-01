@@ -20,9 +20,19 @@ const update_wallet_dto_1 = require("./dto/update-wallet.dto");
 const swagger_1 = require("@nestjs/swagger");
 const auth_guard_1 = require("../auth/guards/auth.guard");
 const wallet_entity_1 = require("./entities/wallet.entity");
+const add_parent_category_dto_1 = require("./dto/add-parent-category.dto");
 let WalletController = class WalletController {
     constructor(walletService) {
         this.walletService = walletService;
+    }
+    addParentCategory(numberOfCategory, request, body) {
+        return this.walletService.addParentCategory(numberOfCategory, request, body);
+    }
+    getParentCategory(request, numberOfCategory) {
+        return this.walletService.getParentCategory(request, numberOfCategory);
+    }
+    addCategory(request, body) {
+        return this.walletService.addCategory(request, body);
     }
     create(createWalletDto, request) {
         return this.walletService.create(createWalletDto, request);
@@ -36,13 +46,41 @@ let WalletController = class WalletController {
     update(id, updateWalletDto) {
         return this.walletService.update(+id, updateWalletDto);
     }
-    addCategory(numberOfWallet, request) {
-        return this.walletService.addCategory(numberOfWallet, request);
-    }
     remove(id) {
         return this.walletService.remove(+id);
     }
 };
+__decorate([
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor),
+    (0, common_1.Post)('addParentCategory/:numberOfCategory'),
+    __param(0, (0, common_1.Param)('numberOfCategory')),
+    __param(1, (0, common_1.Req)()),
+    __param(2, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object, add_parent_category_dto_1.AddParentCategoryDto]),
+    __metadata("design:returntype", void 0)
+], WalletController.prototype, "addParentCategory", null);
+__decorate([
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor),
+    (0, common_1.Get)('addParentCategory/:numberOfCategory'),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)('numberOfCategory')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", void 0)
+], WalletController.prototype, "getParentCategory", null);
+__decorate([
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor),
+    (0, common_1.Post)('addCategory'),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, add_parent_category_dto_1.AddParentCategoryDto]),
+    __metadata("design:returntype", void 0)
+], WalletController.prototype, "addCategory", null);
 __decorate([
     (0, swagger_1.ApiBody)({
         description: 'This Api link created new wallet',
@@ -91,16 +129,6 @@ __decorate([
     __metadata("design:paramtypes", [String, update_wallet_dto_1.UpdateWalletDto]),
     __metadata("design:returntype", void 0)
 ], WalletController.prototype, "update", null);
-__decorate([
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    (0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor),
-    (0, common_1.Post)('addParentCategory/:numberWallet'),
-    __param(0, (0, common_1.Param)('numberWallet')),
-    __param(1, (0, common_1.Req)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
-    __metadata("design:returntype", void 0)
-], WalletController.prototype, "addCategory", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),

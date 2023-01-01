@@ -14,6 +14,8 @@ const typeorm_1 = require("@nestjs/typeorm");
 const wallet_entity_1 = require("./entities/wallet.entity");
 const jwt_1 = require("@nestjs/jwt");
 const config_1 = require("../utils/config");
+const parentCategories_entity_1 = require("./entities/parentCategories.entity");
+const category_entity_1 = require("./entities/category.entity");
 let WalletModule = class WalletModule {
 };
 WalletModule = __decorate([
@@ -23,7 +25,11 @@ WalletModule = __decorate([
                 secret: config_1.JWT_SECRET,
                 signOptions: { expiresIn: '1d' },
             }),
-            typeorm_1.TypeOrmModule.forFeature([wallet_entity_1.WalletEntity]),
+            typeorm_1.TypeOrmModule.forFeature([
+                wallet_entity_1.WalletEntity,
+                parentCategories_entity_1.ParentCategoriesEntity,
+                category_entity_1.CategoryEntity,
+            ]),
         ],
         controllers: [wallet_controller_1.WalletController],
         providers: [wallet_service_1.WalletService],
