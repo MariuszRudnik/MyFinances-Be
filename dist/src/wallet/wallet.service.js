@@ -122,9 +122,6 @@ let WalletService = class WalletService {
             wallet: wallet[0].id,
         });
     }
-    async addCategory(request, body) {
-        return body;
-    }
     async getParentCategory(request, numberOfCategory) {
         const cookie = request.cookies['jwt'];
         const data = await this.jwtService.verifyAsync(cookie);
@@ -143,6 +140,62 @@ let WalletService = class WalletService {
                     id: wallet[0].id,
                 },
             },
+        });
+        return category;
+    }
+    async addCategory(request, body, numberOfCategory) {
+        const { parentCategoryId, nameCategory } = body;
+        const cookie = request.cookies['jwt'];
+        const data = await this.jwtService.verifyAsync(cookie);
+        const userID = data.id;
+        const listOfWallet = await this.walletRepository.find({
+            where: {
+                user: {
+                    id: userID,
+                },
+            },
+        });
+        const wallet = listOfWallet.filter((item) => item.numberWalletUser == numberOfCategory);
+        const parentCategory = await this.parenCategoryRepository.find({
+            where: {
+                wallet: {
+                    id: wallet[0].id,
+                },
+            },
+        });
+        const categoryId = parentCategory.filter((item) => item.id === parentCategoryId);
+        if (categoryId.length > 1 || categoryId.length == 0) {
+            throw new common_1.BadRequestException('Error!!');
+        }
+        const category = {
+            categoryName: nameCategory,
+            parentCategory: parentCategoryId,
+            wallet: wallet[0].id,
+        };
+        this.categoryRepository.save(category);
+        return {
+            ok: 'The category has been added',
+        };
+    }
+    async getCategory(request, numberOfCategory) {
+        const cookie = request.cookies['jwt'];
+        const data = await this.jwtService.verifyAsync(cookie);
+        const userID = data.id;
+        const listOfWallet = await this.walletRepository.find({
+            where: {
+                user: {
+                    id: userID,
+                },
+            },
+        });
+        const wallet = listOfWallet.filter((item) => item.numberWalletUser == numberOfCategory);
+        const category = await this.categoryRepository.find({
+            where: {
+                wallet: {
+                    id: wallet[0].id,
+                },
+            },
+            relations: ['parentCategory'],
         });
         return category;
     }

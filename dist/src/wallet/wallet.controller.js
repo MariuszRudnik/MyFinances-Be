@@ -31,8 +31,11 @@ let WalletController = class WalletController {
     getParentCategory(request, numberOfCategory) {
         return this.walletService.getParentCategory(request, numberOfCategory);
     }
-    addCategory(request, body) {
-        return this.walletService.addCategory(request, body);
+    addCategory(request, body, numberOfCategory) {
+        return this.walletService.addCategory(request, body, numberOfCategory);
+    }
+    getCategory(request, numberOfCategory) {
+        return this.walletService.getCategory(request, numberOfCategory);
     }
     create(createWalletDto, request) {
         return this.walletService.create(createWalletDto, request);
@@ -74,13 +77,24 @@ __decorate([
 __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor),
-    (0, common_1.Post)('addCategory'),
+    (0, common_1.Post)('addCategory/:numberOfCategory'),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.Param)('numberOfCategory')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, add_parent_category_dto_1.AddParentCategoryDto]),
+    __metadata("design:paramtypes", [Object, add_parent_category_dto_1.AddParentCategoryDto, String]),
     __metadata("design:returntype", void 0)
 ], WalletController.prototype, "addCategory", null);
+__decorate([
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor),
+    (0, common_1.Get)('addCategory/:numberOfCategory'),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Param)('numberOfCategory')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", void 0)
+], WalletController.prototype, "getCategory", null);
 __decorate([
     (0, swagger_1.ApiBody)({
         description: 'This Api link created new wallet',

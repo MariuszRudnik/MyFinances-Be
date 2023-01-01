@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CategoryEntity = void 0;
 const typeorm_1 = require("typeorm");
 const parentCategories_entity_1 = require("./parentCategories.entity");
+const wallet_entity_1 = require("./wallet.entity");
 let CategoryEntity = class CategoryEntity {
 };
 __decorate([
@@ -26,6 +27,10 @@ __decorate([
     (0, typeorm_1.ManyToOne)(() => parentCategories_entity_1.ParentCategoriesEntity, (parentCategory) => parentCategory.category),
     __metadata("design:type", parentCategories_entity_1.ParentCategoriesEntity)
 ], CategoryEntity.prototype, "parentCategory", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => wallet_entity_1.WalletEntity, (wallet) => wallet.category),
+    __metadata("design:type", wallet_entity_1.WalletEntity)
+], CategoryEntity.prototype, "wallet", void 0);
 CategoryEntity = __decorate([
     (0, typeorm_1.Entity)('category')
 ], CategoryEntity);

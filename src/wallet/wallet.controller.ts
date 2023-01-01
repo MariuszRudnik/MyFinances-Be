@@ -57,9 +57,23 @@ export class WalletController {
 
   @UseGuards(AuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
-  @Post('addCategory')
-  addCategory(@Req() request: Request, @Body() body: AddParentCategoryDto) {
-    return this.walletService.addCategory(request, body);
+  @Post('addCategory/:numberOfCategory')
+  addCategory(
+    @Req() request: Request,
+    @Body() body: AddParentCategoryDto,
+    @Param('numberOfCategory') numberOfCategory: string,
+  ) {
+    return this.walletService.addCategory(request, body, numberOfCategory);
+  }
+
+  @UseGuards(AuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get('addCategory/:numberOfCategory')
+  getCategory(
+    @Req() request: Request,
+    @Param('numberOfCategory') numberOfCategory: string,
+  ) {
+    return this.walletService.getCategory(request, numberOfCategory);
   }
 
   @ApiBody({

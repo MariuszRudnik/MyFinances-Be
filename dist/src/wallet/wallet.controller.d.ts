@@ -9,7 +9,10 @@ export declare class WalletController {
     constructor(walletService: WalletService);
     addParentCategory(numberOfCategory: string, request: Request, body: AddParentCategoryDto): Promise<any>;
     getParentCategory(request: Request, numberOfCategory: string): Promise<any[]>;
-    addCategory(request: Request, body: AddParentCategoryDto): Promise<any>;
+    addCategory(request: Request, body: AddParentCategoryDto, numberOfCategory: string): Promise<{
+        ok: string;
+    }>;
+    getCategory(request: Request, numberOfCategory: string): Promise<any[]>;
     create(createWalletDto: CreateWalletDto, request: Request): Promise<import("../../types").addWalletType>;
     findAllWallet(request: Request): Promise<any[]>;
     findWallet(numberOfWallet: string, request: Request): Promise<WalletEntity>;
