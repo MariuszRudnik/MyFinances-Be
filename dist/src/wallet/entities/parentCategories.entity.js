@@ -13,6 +13,7 @@ exports.ParentCategoriesEntity = void 0;
 const typeorm_1 = require("typeorm");
 const wallet_entity_1 = require("./wallet.entity");
 const category_entity_1 = require("./category.entity");
+const transaction_entity_1 = require("../../transactions/entities/transaction.entity");
 let ParentCategoriesEntity = class ParentCategoriesEntity {
 };
 __decorate([
@@ -24,6 +25,12 @@ __decorate([
     __metadata("design:type", String)
 ], ParentCategoriesEntity.prototype, "name", void 0);
 __decorate([
+    (0, typeorm_1.Column)({
+        nullable: true,
+    }),
+    __metadata("design:type", Number)
+], ParentCategoriesEntity.prototype, "plannedBudget", void 0);
+__decorate([
     (0, typeorm_1.ManyToOne)(() => wallet_entity_1.WalletEntity, (wallet) => wallet.parentCategory),
     __metadata("design:type", wallet_entity_1.WalletEntity)
 ], ParentCategoriesEntity.prototype, "wallet", void 0);
@@ -31,6 +38,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => category_entity_1.CategoryEntity, (category) => category.parentCategory),
     __metadata("design:type", Array)
 ], ParentCategoriesEntity.prototype, "category", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => transaction_entity_1.Transaction, (transaction) => transaction.parentCategory),
+    __metadata("design:type", Array)
+], ParentCategoriesEntity.prototype, "transaction", void 0);
 ParentCategoriesEntity = __decorate([
     (0, typeorm_1.Entity)()
 ], ParentCategoriesEntity);

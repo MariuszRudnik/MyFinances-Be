@@ -8,6 +8,7 @@ import {
 import { UserEntity } from '../../user/entity/user.entity';
 import { ParentCategoriesEntity } from './parentCategories.entity';
 import { WalletEntity } from './wallet.entity';
+import { Transaction } from '../../transactions/entities/transaction.entity';
 
 @Entity('category')
 export class CategoryEntity {
@@ -17,8 +18,15 @@ export class CategoryEntity {
   @Column()
   categoryName: string;
 
-  // @ManyToOne(() => UserEntity, (user) => user.category)
-  // user: UserEntity;
+  @Column({
+    nullable: true,
+  })
+  plannedBudget: number;
+
+  @Column({
+    nullable: true,
+  })
+  plannedBudgetValur: string;
 
   @ManyToOne(
     () => ParentCategoriesEntity,
@@ -28,4 +36,7 @@ export class CategoryEntity {
 
   @ManyToOne(() => WalletEntity, (wallet) => wallet.category)
   wallet: WalletEntity;
+
+  @OneToMany(() => Transaction, (transaction) => transaction.category)
+  transaction: Transaction[];
 }

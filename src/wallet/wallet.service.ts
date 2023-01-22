@@ -125,11 +125,19 @@ export class WalletService {
     if (wallet.length > 1 || wallet.length == 0) {
       throw new BadRequestException('Something bad happened');
     }
-
-    return this.parenCategoryRepository.save({
+    const parent = await this.parenCategoryRepository.save({
       name: body.name,
+      plannedBudget: body.plannedBudget,
       wallet: wallet[0].id,
     });
+
+    const category = {
+      categoryName: 'Other',
+      parentCategory: parent.id,
+      wallet: wallet[0].id,
+    };
+    await this.categoryRepository.save(category);
+    return { ok: 'ok' };
   }
 
   async getParentCategory(request, numberOfCategory) {
@@ -214,7 +222,7 @@ export class WalletService {
     const wallet = listOfWallet.filter(
       (item) => item.numberWalletUser == numberOfCategory,
     );
-    const category = await this.categoryRepository.find({
+    const categories = await this.categoryRepository.find({
       where: {
         wallet: {
           id: wallet[0].id,
@@ -222,7 +230,16 @@ export class WalletService {
       },
       relations: ['parentCategory'],
     });
-
-    return category;
+    const categoryResult = [];
+    for (const item of categories) {
+      categoryResult.push({
+        id: item.id,
+        name: item.categoryName,
+        plannedBudget: item.plannedBudget,
+        plannedBudgetValur: item.plannedBudgetValur,
+        parentCategory: item.parentCategory.id,
+      });
+    }
+    return categoryResult;
   }
 }

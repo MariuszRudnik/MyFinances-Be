@@ -12,6 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Transaction = void 0;
 const typeorm_1 = require("typeorm");
 const wallet_entity_1 = require("../../wallet/entities/wallet.entity");
+const parentCategories_entity_1 = require("../../wallet/entities/parentCategories.entity");
+const category_entity_1 = require("../../wallet/entities/category.entity");
 let Transaction = class Transaction {
 };
 __decorate([
@@ -22,16 +24,6 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Transaction.prototype, "nameOfTransactions", void 0);
-__decorate([
-    (0, typeorm_1.Column)({
-        nullable: true,
-    }),
-    __metadata("design:type", String)
-], Transaction.prototype, "category", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], Transaction.prototype, "parentCategories", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
@@ -47,9 +39,21 @@ __decorate([
     __metadata("design:type", String)
 ], Transaction.prototype, "operations", void 0);
 __decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Transaction.prototype, "description", void 0);
+__decorate([
     (0, typeorm_1.ManyToOne)(() => wallet_entity_1.WalletEntity, (wallet) => wallet.transaction),
     __metadata("design:type", wallet_entity_1.WalletEntity)
 ], Transaction.prototype, "wallet", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => parentCategories_entity_1.ParentCategoriesEntity, (parentCategory) => parentCategory.transaction),
+    __metadata("design:type", parentCategories_entity_1.ParentCategoriesEntity)
+], Transaction.prototype, "parentCategory", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => category_entity_1.CategoryEntity, (category) => category.transaction),
+    __metadata("design:type", category_entity_1.CategoryEntity)
+], Transaction.prototype, "category", void 0);
 Transaction = __decorate([
     (0, typeorm_1.Entity)('transactions')
 ], Transaction);

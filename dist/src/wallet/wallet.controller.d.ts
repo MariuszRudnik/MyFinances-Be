@@ -7,7 +7,9 @@ import { AddParentCategoryDto } from './dto/add-parent-category.dto';
 export declare class WalletController {
     private readonly walletService;
     constructor(walletService: WalletService);
-    addParentCategory(numberOfCategory: string, request: Request, body: AddParentCategoryDto): Promise<any>;
+    addParentCategory(numberOfCategory: string, request: Request, body: AddParentCategoryDto): Promise<{
+        ok: string;
+    }>;
     getParentCategory(request: Request, numberOfCategory: string): Promise<any[]>;
     addCategory(request: Request, body: AddParentCategoryDto, numberOfCategory: string): Promise<{
         ok: string;

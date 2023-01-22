@@ -56,7 +56,7 @@ let WalletController = class WalletController {
 __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor),
-    (0, common_1.Post)('addParentCategory/:numberOfCategory'),
+    (0, common_1.Post)('parentCategory/add/:numberOfCategory'),
     __param(0, (0, common_1.Param)('numberOfCategory')),
     __param(1, (0, common_1.Req)()),
     __param(2, (0, common_1.Body)()),
@@ -67,7 +67,7 @@ __decorate([
 __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor),
-    (0, common_1.Get)('addParentCategory/:numberOfCategory'),
+    (0, common_1.Get)('parentCategory/:numberOfCategory'),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Param)('numberOfCategory')),
     __metadata("design:type", Function),
@@ -77,7 +77,7 @@ __decorate([
 __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor),
-    (0, common_1.Post)('addCategory/:numberOfCategory'),
+    (0, common_1.Post)('/category/add/:numberOfCategory'),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Body)()),
     __param(2, (0, common_1.Param)('numberOfCategory')),
@@ -88,7 +88,7 @@ __decorate([
 __decorate([
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor),
-    (0, common_1.Get)('addCategory/:numberOfCategory'),
+    (0, common_1.Get)('category/:numberOfCategory'),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Param)('numberOfCategory')),
     __metadata("design:type", Function),

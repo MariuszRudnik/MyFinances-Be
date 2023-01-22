@@ -18,15 +18,16 @@ const transactions_service_1 = require("./transactions.service");
 const create_transaction_dto_1 = require("./dto/create-transaction.dto");
 const update_transaction_dto_1 = require("./dto/update-transaction.dto");
 const swagger_1 = require("@nestjs/swagger");
+const auth_guard_1 = require("../auth/guards/auth.guard");
 let TransactionsController = class TransactionsController {
     constructor(transactionsService) {
         this.transactionsService = transactionsService;
     }
-    create(createTransactionDto) {
-        return this.transactionsService.create(createTransactionDto);
+    create(createTransactionDto, numberOfWallet, request) {
+        return this.transactionsService.create(createTransactionDto, numberOfWallet, request);
     }
-    findAll() {
-        return this.transactionsService.findAll();
+    findTransactionWallet(createTransactionDto, numberOfWallet, request) {
+        return this.transactionsService.findTransactionWallet(createTransactionDto, numberOfWallet, request);
     }
     findOne(id) {
         return this.transactionsService.findOne(+id);
@@ -39,18 +40,25 @@ let TransactionsController = class TransactionsController {
     }
 };
 __decorate([
-    (0, common_1.Post)(),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor),
+    (0, common_1.Post)('add/:numberOfWallet'),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Param)('numberOfWallet')),
+    __param(2, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_transaction_dto_1.CreateTransactionDto]),
+    __metadata("design:paramtypes", [create_transaction_dto_1.CreateTransactionDto, Number, Object]),
     __metadata("design:returntype", void 0)
 ], TransactionsController.prototype, "create", null);
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Get)(':numberOfWallet'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Param)('numberOfWallet')),
+    __param(2, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [create_transaction_dto_1.CreateTransactionDto, Number, Object]),
     __metadata("design:returntype", void 0)
-], TransactionsController.prototype, "findAll", null);
+], TransactionsController.prototype, "findTransactionWallet", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),

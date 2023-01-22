@@ -15,7 +15,9 @@ export declare class WalletService {
     findAllWallet(request: any): Promise<any[]>;
     update(id: number, updateWalletDto: UpdateWalletDto): string;
     remove(id: number): string;
-    addParentCategory(numberOfCategory: any, request: any, body: any): Promise<any>;
+    addParentCategory(numberOfCategory: any, request: any, body: any): Promise<{
+        ok: string;
+    }>;
     getParentCategory(request: any, numberOfCategory: any): Promise<any[]>;
     addCategory(request: any, body: any, numberOfCategory: any): Promise<{
         ok: string;

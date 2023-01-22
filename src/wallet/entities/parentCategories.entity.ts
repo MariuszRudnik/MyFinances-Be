@@ -1,6 +1,13 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { WalletEntity } from "./wallet.entity";
-import { CategoryEntity } from "./category.entity";
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { WalletEntity } from './wallet.entity';
+import { CategoryEntity } from './category.entity';
+import { Transaction } from '../../transactions/entities/transaction.entity';
 
 @Entity()
 export class ParentCategoriesEntity {
@@ -10,10 +17,17 @@ export class ParentCategoriesEntity {
   @Column()
   name: string;
 
-  @ManyToOne(()=>WalletEntity, (wallet)=>wallet.parentCategory)
-  wallet: WalletEntity
+  @Column({
+    nullable: true,
+  })
+  plannedBudget: number;
 
-  @OneToMany(()=>CategoryEntity, (category)=> category.parentCategory)
-  category: CategoryEntity[]
+  @ManyToOne(() => WalletEntity, (wallet) => wallet.parentCategory)
+  wallet: WalletEntity;
 
+  @OneToMany(() => CategoryEntity, (category) => category.parentCategory)
+  category: CategoryEntity[];
+
+  @OneToMany(() => Transaction, (transaction) => transaction.parentCategory)
+  transaction: Transaction[];
 }

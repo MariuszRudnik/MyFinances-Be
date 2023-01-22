@@ -6,25 +6,49 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
+  UseInterceptors,
+  ClassSerializerInterceptor,
+  Req,
 } from '@nestjs/common';
 import { TransactionsService } from './transactions.service';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '../auth/guards/auth.guard';
+import { Request } from 'express';
 
 @ApiTags('Transactions')
 @Controller('transactions')
 export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
-  @Post()
-  create(@Body() createTransactionDto: CreateTransactionDto) {
-    return this.transactionsService.create(createTransactionDto);
+  @UseGuards(AuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Post('add/:numberOfWallet')
+  create(
+    @Body() createTransactionDto: CreateTransactionDto,
+    @Param('numberOfWallet') numberOfWallet: number,
+    @Req() request: Request,
+  ) {
+    return this.transactionsService.create(
+      createTransactionDto,
+      numberOfWallet,
+      request,
+    );
   }
 
-  @Get()
-  findAll() {
-    return this.transactionsService.findAll();
+  @Get(':numberOfWallet')
+  findTransactionWallet(
+    @Body() createTransactionDto: CreateTransactionDto,
+    @Param('numberOfWallet') numberOfWallet: number,
+    @Req() request: Request,
+  ) {
+    return this.transactionsService.findTransactionWallet(
+      createTransactionDto,
+      numberOfWallet,
+      request,
+    );
   }
 
   @Get(':id')

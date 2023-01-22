@@ -7,6 +7,8 @@ import {
 } from 'typeorm';
 import { WalletEntity } from '../../wallet/entities/wallet.entity';
 import { UserEntity } from '../../user/entity/user.entity';
+import { ParentCategoriesEntity } from '../../wallet/entities/parentCategories.entity';
+import { CategoryEntity } from '../../wallet/entities/category.entity';
 
 @Entity('transactions')
 export class Transaction {
@@ -15,14 +17,6 @@ export class Transaction {
 
   @Column()
   nameOfTransactions: string;
-
-  @Column({
-    nullable: true,
-  })
-  category: string;
-
-  @Column()
-  parentCategories: string;
 
   @Column()
   price: number;
@@ -36,6 +30,18 @@ export class Transaction {
   @Column()
   operations: string;
 
+  @Column()
+  description: string;
+
   @ManyToOne(() => WalletEntity, (wallet) => wallet.transaction)
   wallet: WalletEntity;
+
+  @ManyToOne(
+    () => ParentCategoriesEntity,
+    (parentCategory) => parentCategory.transaction,
+  )
+  parentCategory: ParentCategoriesEntity;
+
+  @ManyToOne(() => CategoryEntity, (category) => category.transaction)
+  category: CategoryEntity;
 }

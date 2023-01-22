@@ -32,7 +32,7 @@ export class WalletController {
 
   @UseGuards(AuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
-  @Post('addParentCategory/:numberOfCategory')
+  @Post('parentCategory/add/:numberOfCategory')
   addParentCategory(
     @Param('numberOfCategory') numberOfCategory: string,
     @Req() request: Request,
@@ -47,7 +47,7 @@ export class WalletController {
 
   @UseGuards(AuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
-  @Get('addParentCategory/:numberOfCategory')
+  @Get('parentCategory/:numberOfCategory')
   getParentCategory(
     @Req() request: Request,
     @Param('numberOfCategory') numberOfCategory: string,
@@ -57,7 +57,7 @@ export class WalletController {
 
   @UseGuards(AuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
-  @Post('addCategory/:numberOfCategory')
+  @Post('/category/add/:numberOfCategory')
   addCategory(
     @Req() request: Request,
     @Body() body: AddParentCategoryDto,
@@ -68,7 +68,7 @@ export class WalletController {
 
   @UseGuards(AuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
-  @Get('addCategory/:numberOfCategory')
+  @Get('category/:numberOfCategory')
   getCategory(
     @Req() request: Request,
     @Param('numberOfCategory') numberOfCategory: string,
