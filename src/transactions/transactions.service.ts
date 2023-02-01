@@ -23,6 +23,27 @@ export class TransactionsService {
     private jwtService: JwtService,
   ) {}
 
+  async wallet(
+    createTransactionDto: CreateTransactionDto,
+    numberOfWallet,
+    request,
+  ) {
+    const cookie = request.cookies['jwt'];
+    const data = await this.jwtService.verifyAsync(cookie);
+    const userID = data.id;
+    const listOfWallet = await this.walletRepository.find({
+      where: {
+        user: {
+          id: userID,
+        },
+      },
+    });
+    const wallet = listOfWallet.filter(
+      (item) => item.numberWalletUser == numberOfWallet,
+    );
+    return wallet;
+  }
+
   async create(
     createTransactionDto: CreateTransactionDto,
     numberOfWallet,
@@ -36,19 +57,12 @@ export class TransactionsService {
       category,
       operations,
       description,
+      tags,
     } = createTransactionDto;
-    const cookie = request.cookies['jwt'];
-    const data = await this.jwtService.verifyAsync(cookie);
-    const userID = data.id;
-    const listOfWallet = await this.walletRepository.find({
-      where: {
-        user: {
-          id: userID,
-        },
-      },
-    });
-    const wallet = listOfWallet.filter(
-      (item) => item.numberWalletUser == numberOfWallet,
+    const wallet = await this.wallet(
+      createTransactionDto,
+      numberOfWallet,
+      request,
     );
     if (wallet.length > 1 || wallet.length == 0) {
       throw new BadRequestException('Something bad happened');
@@ -78,36 +92,32 @@ export class TransactionsService {
       wallet: wallet[0].id,
       parentCategory,
       category,
+      tags,
     };
     await this.transaction.save(transaction);
     return transaction;
   }
 
   async findTransactionWallet(createTransactionDto, numberOfWallet, request) {
-    const cookie = request.cookies['jwt'];
-    const data = await this.jwtService.verifyAsync(cookie);
-    const userID = data.id;
-    const listOfWallet = await this.walletRepository.find({
-      where: {
-        user: {
-          id: userID,
-        },
-      },
-    });
-    const wallet = listOfWallet.filter(
-      (item) => item.numberWalletUser == numberOfWallet,
+    const wallet = await this.wallet(
+      createTransactionDto,
+      numberOfWallet,
+      request,
     );
-    const transaction = await this.transaction.find({
+    const transactions = await this.transaction.find({
       where: {
         wallet: {
           id: wallet[0].id,
         },
       },
+      order: {
+        dateExpenses: 'DESC',
+      },
       relations: ['parentCategory', 'category'],
     });
     const transactionItems = [];
 
-    for (const item of transaction) {
+    for (const item of transactions) {
       transactionItems.push({
         id: item.id,
         name: item.nameOfTransactions,
@@ -121,6 +131,35 @@ export class TransactionsService {
     }
 
     return transactionItems;
+  }
+
+  async findPaginateTransactionWallet(
+    createTransactionDto,
+    numberOfWallet,
+    request,
+    currentPage = 0,
+  ) {
+    const wallet = await this.wallet(
+      createTransactionDto,
+      numberOfWallet,
+      request,
+    );
+    const maxPerPage = 5;
+    const [items, count] = await this.transaction.findAndCount({
+      where: {
+        wallet: {
+          id: wallet[0].id,
+        },
+      },
+      order: {
+        dateExpenses: 'DESC',
+      },
+      skip: maxPerPage * currentPage,
+      take: maxPerPage,
+      relations: ['parentCategory', 'category'],
+    });
+    const pagesCount = Math.ceil(count / maxPerPage);
+    return { items, pagesCount };
   }
 
   findOne(id: number) {

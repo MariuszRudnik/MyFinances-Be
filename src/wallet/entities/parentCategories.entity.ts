@@ -22,6 +22,12 @@ export class ParentCategoriesEntity {
   })
   plannedBudget: number;
 
+  @Column({
+    nullable: true,
+    length: 50,
+  })
+  icon: string;
+
   @ManyToOne(() => WalletEntity, (wallet) => wallet.parentCategory)
   wallet: WalletEntity;
 

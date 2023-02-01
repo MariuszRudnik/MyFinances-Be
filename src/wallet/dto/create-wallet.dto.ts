@@ -18,4 +18,10 @@ export class CreateWalletDto {
     example: '0',
   })
   initialState: string;
+
+  @ApiProperty({
+    description: 'Color wallet',
+    example: 'red',
+  })
+  colorWallet: string;
 }

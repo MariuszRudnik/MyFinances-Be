@@ -19,7 +19,7 @@ export class Transaction {
   nameOfTransactions: string;
 
   @Column()
-  price: number;
+  price: string;
 
   @Column({
     nullable: true,
@@ -32,6 +32,11 @@ export class Transaction {
 
   @Column()
   description: string;
+
+  @Column({
+    nullable: true,
+  })
+  tags: string;
 
   @ManyToOne(() => WalletEntity, (wallet) => wallet.transaction)
   wallet: WalletEntity;

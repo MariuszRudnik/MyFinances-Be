@@ -51,6 +51,12 @@ export class WalletEntity extends BaseEntity {
   @Column()
   initialState: number;
 
+  @Column({
+    nullable: true,
+    length: 10,
+  })
+  colorWallet: string;
+
   @ManyToOne(() => UserEntity, (user) => user.wallet)
   user: UserEntity;
 

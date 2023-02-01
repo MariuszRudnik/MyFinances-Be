@@ -6,4 +6,5 @@ export class CreateTransactionDto {
   description: string;
   parentCategory: string;
   category: string;
+  tags: string;
 }

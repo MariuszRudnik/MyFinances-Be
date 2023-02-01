@@ -50,6 +50,20 @@ export class TransactionsController {
       request,
     );
   }
+  @Get(':numberOfWallet/:currentPage')
+  findPaginateTransactionWallet(
+    @Body() createTransactionDto: CreateTransactionDto,
+    @Param('numberOfWallet') numberOfWallet: number,
+    @Param('currentPage') currentPage: number,
+    @Req() request: Request,
+  ) {
+    return this.transactionsService.findPaginateTransactionWallet(
+      createTransactionDto,
+      numberOfWallet,
+      request,
+      currentPage,
+    );
+  }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
