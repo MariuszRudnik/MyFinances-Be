@@ -14,8 +14,14 @@ export declare class TransactionsController {
         wallet: string;
         parentCategory: string;
         category: string;
+        tags: string;
     }>;
     findTransactionWallet(createTransactionDto: CreateTransactionDto, numberOfWallet: number, request: Request): Promise<any[]>;
+    findPaginateTransactionWallet(createTransactionDto: CreateTransactionDto, numberOfWallet: number, currentPage: number, request: Request): Promise<{
+        transactionItems: any[];
+        pagesCount: number;
+    }>;
+    findTransactionInAMonth(createTransactionDto: CreateTransactionDto, numberOfWallet: number, month: number, year: number, request: Request): Promise<any[]>;
     findOne(id: string): string;
     update(id: string, updateTransactionDto: UpdateTransactionDto): string;
     remove(id: string): string;

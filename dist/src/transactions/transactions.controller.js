@@ -29,6 +29,12 @@ let TransactionsController = class TransactionsController {
     findTransactionWallet(createTransactionDto, numberOfWallet, request) {
         return this.transactionsService.findTransactionWallet(createTransactionDto, numberOfWallet, request);
     }
+    findPaginateTransactionWallet(createTransactionDto, numberOfWallet, currentPage, request) {
+        return this.transactionsService.findPaginateTransactionWallet(createTransactionDto, numberOfWallet, request, currentPage);
+    }
+    findTransactionInAMonth(createTransactionDto, numberOfWallet, month, year, request) {
+        return this.transactionsService.findTransactionInAMonth(createTransactionDto, numberOfWallet, request, month, year);
+    }
     findOne(id) {
         return this.transactionsService.findOne(+id);
     }
@@ -59,6 +65,27 @@ __decorate([
     __metadata("design:paramtypes", [create_transaction_dto_1.CreateTransactionDto, Number, Object]),
     __metadata("design:returntype", void 0)
 ], TransactionsController.prototype, "findTransactionWallet", null);
+__decorate([
+    (0, common_1.Get)(':numberOfWallet/:currentPage'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Param)('numberOfWallet')),
+    __param(2, (0, common_1.Param)('currentPage')),
+    __param(3, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_transaction_dto_1.CreateTransactionDto, Number, Number, Object]),
+    __metadata("design:returntype", void 0)
+], TransactionsController.prototype, "findPaginateTransactionWallet", null);
+__decorate([
+    (0, common_1.Get)('get-in-a-month/:numberOfWallet/:month/:year'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Param)('numberOfWallet')),
+    __param(2, (0, common_1.Param)('month')),
+    __param(3, (0, common_1.Param)('year')),
+    __param(4, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_transaction_dto_1.CreateTransactionDto, Number, Number, Number, Object]),
+    __metadata("design:returntype", void 0)
+], TransactionsController.prototype, "findTransactionInAMonth", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),

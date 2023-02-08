@@ -26,7 +26,7 @@ __decorate([
 ], Transaction.prototype, "nameOfTransactions", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], Transaction.prototype, "price", void 0);
 __decorate([
     (0, typeorm_1.Column)({
@@ -42,6 +42,12 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Transaction.prototype, "description", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        nullable: true,
+    }),
+    __metadata("design:type", String)
+], Transaction.prototype, "tags", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => wallet_entity_1.WalletEntity, (wallet) => wallet.transaction),
     __metadata("design:type", wallet_entity_1.WalletEntity)

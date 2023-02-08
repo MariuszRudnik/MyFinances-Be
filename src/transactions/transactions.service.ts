@@ -159,7 +159,71 @@ export class TransactionsService {
       relations: ['parentCategory', 'category'],
     });
     const pagesCount = Math.ceil(count / maxPerPage);
-    return { items, pagesCount };
+    const transactionItems = [];
+    for (const item of items) {
+      transactionItems.push({
+        id: item.id,
+        name: item.nameOfTransactions,
+        price: item.price,
+        date: item.dateExpenses,
+        operations: item.operations,
+        description: item.description,
+        parentCategory: item.parentCategory.id,
+        category: item.category.id,
+      });
+    }
+    return { transactionItems, pagesCount };
+  }
+
+  async findTransactionInAMonth(
+    createTransactionDto,
+    numberOfWallet,
+    request,
+    month,
+    year,
+  ) {
+    const wallet = await this.wallet(
+      createTransactionDto,
+      numberOfWallet,
+      request,
+    );
+    const transaction = await this.transaction.find({
+      where: {
+        wallet: {
+          id: wallet[0].id,
+        },
+      },
+      order: {
+        dateExpenses: 'DESC',
+      },
+      relations: ['parentCategory', 'category'],
+    });
+    console.log(year, month);
+    const userData = new Date(`${year}-${month}`);
+
+    const transactionYear = transaction
+      .filter((item) => {
+        const data = new Date(item.dateExpenses);
+        return userData.getFullYear() == data.getFullYear();
+      })
+      .filter((item) => {
+        const data = new Date(item.dateExpenses);
+        return userData.getUTCMonth() == data.getUTCMonth();
+      });
+    const transactionItems = [];
+    for (const item of transactionYear) {
+      transactionItems.push({
+        id: item.id,
+        name: item.nameOfTransactions,
+        price: item.price,
+        date: item.dateExpenses,
+        operations: item.operations,
+        description: item.description,
+        parentCategory: item.parentCategory.id,
+        category: item.category.id,
+      });
+    }
+    return transactionItems;
   }
 
   findOne(id: number) {

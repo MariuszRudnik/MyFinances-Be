@@ -4,10 +4,11 @@ import { CategoryEntity } from '../../wallet/entities/category.entity';
 export declare class Transaction {
     id: string;
     nameOfTransactions: string;
-    price: number;
+    price: string;
     dateExpenses: Date;
     operations: string;
     description: string;
+    tags: string;
     wallet: WalletEntity;
     parentCategory: ParentCategoriesEntity;
     category: CategoryEntity;

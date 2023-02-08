@@ -31,6 +31,13 @@ __decorate([
     __metadata("design:type", Number)
 ], ParentCategoriesEntity.prototype, "plannedBudget", void 0);
 __decorate([
+    (0, typeorm_1.Column)({
+        nullable: true,
+        length: 50,
+    }),
+    __metadata("design:type", String)
+], ParentCategoriesEntity.prototype, "icon", void 0);
+__decorate([
     (0, typeorm_1.ManyToOne)(() => wallet_entity_1.WalletEntity, (wallet) => wallet.parentCategory),
     __metadata("design:type", wallet_entity_1.WalletEntity)
 ], ParentCategoriesEntity.prototype, "wallet", void 0);

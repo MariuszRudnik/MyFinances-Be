@@ -34,5 +34,12 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], CreateWalletDto.prototype, "initialState", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Color wallet',
+        example: 'red',
+    }),
+    __metadata("design:type", String)
+], CreateWalletDto.prototype, "colorWallet", void 0);
 exports.CreateWalletDto = CreateWalletDto;
 //# sourceMappingURL=create-wallet.dto.js.map

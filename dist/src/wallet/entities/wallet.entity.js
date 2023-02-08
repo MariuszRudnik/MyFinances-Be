@@ -58,6 +58,13 @@ __decorate([
     __metadata("design:type", Number)
 ], WalletEntity.prototype, "initialState", void 0);
 __decorate([
+    (0, typeorm_1.Column)({
+        nullable: true,
+        length: 10,
+    }),
+    __metadata("design:type", String)
+], WalletEntity.prototype, "colorWallet", void 0);
+__decorate([
     (0, typeorm_1.ManyToOne)(() => user_entity_1.UserEntity, (user) => user.wallet),
     __metadata("design:type", user_entity_1.UserEntity)
 ], WalletEntity.prototype, "user", void 0);

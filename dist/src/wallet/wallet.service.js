@@ -30,7 +30,7 @@ let WalletService = class WalletService {
     async create(createWalletDto, request) {
         const cookie = request.cookies['jwt'];
         const data = await this.jwtService.verifyAsync(cookie);
-        const { nameOfWallet, typeOfCurrency, initialState } = createWalletDto;
+        const { nameOfWallet, typeOfCurrency, initialState, colorWallet } = createWalletDto;
         const initialStateNumber = Number(initialState);
         const userID = data.id;
         let numberWalletUser = 0;
@@ -52,6 +52,7 @@ let WalletService = class WalletService {
         const wallet = {
             user: data.id,
             numberWalletUser: numberWalletUser,
+            colorWallet,
             nameOfWallet,
             typeOfCurrency,
             initialState: initialStateNumber,
@@ -120,6 +121,7 @@ let WalletService = class WalletService {
         const parent = await this.parenCategoryRepository.save({
             name: body.name,
             plannedBudget: body.plannedBudget,
+            icon: body.icon,
             wallet: wallet[0].id,
         });
         const category = {

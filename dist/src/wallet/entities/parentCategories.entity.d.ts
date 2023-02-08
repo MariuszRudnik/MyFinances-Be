@@ -5,6 +5,7 @@ export declare class ParentCategoriesEntity {
     id: string;
     name: string;
     plannedBudget: number;
+    icon: string;
     wallet: WalletEntity;
     category: CategoryEntity[];
     transaction: Transaction[];

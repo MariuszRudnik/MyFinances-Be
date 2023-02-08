@@ -9,6 +9,7 @@ export declare class WalletEntity extends BaseEntity {
     nameOfWallet: string;
     typeOfCurrency: string;
     initialState: number;
+    colorWallet: string;
     user: UserEntity;
     transaction: Transaction;
     parentCategory: ParentCategoriesEntity[];

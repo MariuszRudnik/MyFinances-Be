@@ -65,6 +65,23 @@ export class TransactionsController {
     );
   }
 
+  @Get('get-in-a-month/:numberOfWallet/:month/:year')
+  findTransactionInAMonth(
+    @Body() createTransactionDto: CreateTransactionDto,
+    @Param('numberOfWallet') numberOfWallet: number,
+    @Param('month') month: number,
+    @Param('year') year: number,
+    @Req() request: Request,
+  ) {
+    return this.transactionsService.findTransactionInAMonth(
+      createTransactionDto,
+      numberOfWallet,
+      request,
+      month,
+      year,
+    );
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.transactionsService.findOne(+id);
