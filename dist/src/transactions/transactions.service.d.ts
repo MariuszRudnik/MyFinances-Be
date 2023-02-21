@@ -28,7 +28,15 @@ export declare class TransactionsService {
         pagesCount: number;
     }>;
     findTransactionInAMonth(createTransactionDto: any, numberOfWallet: any, request: any, month: any, year: any): Promise<any[]>;
+    findSumOfTheMonth(createTransactionDto: any, numberOfWallet: any, request: any, month: any, year: any): Promise<{
+        data: {
+            type: string;
+            sum: number;
+        }[];
+        theOldestDate: Date;
+        theNewDate: Date;
+    }>;
     findOne(id: number): string;
     update(id: number, updateTransactionDto: UpdateTransactionDto): string;
-    remove(id: number): string;
+    remove(id: string, request: any, numberOfWallet: any): Promise<any>;
 }

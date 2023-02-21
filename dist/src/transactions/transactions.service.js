@@ -44,7 +44,7 @@ let TransactionsService = class TransactionsService {
         return wallet;
     }
     async create(createTransactionDto, numberOfWallet, request) {
-        const { name, price, data: dateExpenses, parentCategory, category, operations, description, tags, } = createTransactionDto;
+        const { name, price, data, parentCategory, category, operations, description, tags, } = createTransactionDto;
         const wallet = await this.wallet(createTransactionDto, numberOfWallet, request);
         if (wallet.length > 1 || wallet.length == 0) {
             throw new common_1.BadRequestException('Something bad happened');
@@ -63,10 +63,12 @@ let TransactionsService = class TransactionsService {
         if (checkCategory.length > 1 || checkCategory.length == 0) {
             throw new common_1.BadRequestException('Something bad happened in category');
         }
+        const date = data;
+        console.log(typeof data);
         const transaction = {
             nameOfTransactions: name,
             price,
-            dateExpenses,
+            dateExpenses: date,
             operations,
             description,
             wallet: wallet[0].id,
@@ -150,9 +152,8 @@ let TransactionsService = class TransactionsService {
             },
             relations: ['parentCategory', 'category'],
         });
-        console.log(year, month);
         const userData = new Date(`${year}-${month}`);
-        const transactionYear = transaction
+        const transactionYearAndMonth = transaction
             .filter((item) => {
             const data = new Date(item.dateExpenses);
             return userData.getFullYear() == data.getFullYear();
@@ -162,7 +163,7 @@ let TransactionsService = class TransactionsService {
             return userData.getUTCMonth() == data.getUTCMonth();
         });
         const transactionItems = [];
-        for (const item of transactionYear) {
+        for (const item of transactionYearAndMonth) {
             transactionItems.push({
                 id: item.id,
                 name: item.nameOfTransactions,
@@ -176,14 +177,98 @@ let TransactionsService = class TransactionsService {
         }
         return transactionItems;
     }
+    async findSumOfTheMonth(createTransactionDto, numberOfWallet, request, month, year) {
+        const wallet = await this.wallet(createTransactionDto, numberOfWallet, request);
+        const userData = new Date(`${year}-${month}`);
+        const transaction = await this.transaction.find({
+            where: {
+                wallet: {
+                    id: wallet[0].id,
+                },
+            },
+            order: {
+                dateExpenses: 'DESC',
+            },
+        });
+        const transactionYearAndMonth = transaction
+            .filter((item) => {
+            const data = new Date(item.dateExpenses);
+            return userData.getFullYear() == data.getFullYear();
+        })
+            .filter((item) => {
+            const data = new Date(item.dateExpenses);
+            return userData.getUTCMonth() == data.getUTCMonth();
+        });
+        const toDay = new Date();
+        let theOldestDate = { dateExpenses: toDay };
+        let theNewDate = { dateExpenses: toDay };
+        if (transactionYearAndMonth.length >= 1) {
+            theOldestDate = transactionYearAndMonth.sort((a, b) => {
+                return a.dateExpenses - b.dateExpenses;
+            })[0];
+            theNewDate = transactionYearAndMonth.sort((a, b) => {
+                return b.dateExpenses - a.dateExpenses;
+            })[0];
+        }
+        const influenceArray = [0];
+        const expenditureArray = [0];
+        transactionYearAndMonth
+            .filter((item) => item.operations == 'influence')
+            .forEach((item) => {
+            influenceArray.push(item.price);
+        });
+        transactionYearAndMonth
+            .filter((item) => item.operations == 'expenditure')
+            .forEach((item) => {
+            expenditureArray.push(item.price);
+        });
+        console.log(transactionYearAndMonth);
+        const influence = influenceArray.reduce((prev, next) => Number(prev) + Number(next));
+        const expenditure = expenditureArray.reduce((prev, next) => Number(prev) + Number(next));
+        const data = [
+            { type: 'Influence', sum: influence },
+            { type: 'Expenditure', sum: expenditure },
+        ];
+        return {
+            data,
+            theOldestDate: theOldestDate.dateExpenses,
+            theNewDate: theNewDate.dateExpenses,
+        };
+    }
     findOne(id) {
         return `This action returns a #${id} transaction`;
     }
     update(id, updateTransactionDto) {
         return `This action updates a #${id} transaction`;
     }
-    remove(id) {
-        return `This action removes a #${id} transaction`;
+    async remove(id, request, numberOfWallet) {
+        const cookie = request.cookies['jwt'];
+        const data = await this.jwtService.verifyAsync(cookie);
+        const userID = data.id;
+        const listOfWallet = await this.walletRepository.find({
+            where: {
+                user: {
+                    id: userID,
+                },
+            },
+        });
+        const wallet = listOfWallet.find((item) => item.numberWalletUser == numberOfWallet);
+        if (!wallet) {
+            throw new Error('Wallet not found');
+        }
+        const transaction = await this.transaction.findOne({
+            where: {
+                id,
+                wallet: {
+                    id: wallet.id,
+                },
+            },
+        });
+        if (!transaction) {
+            throw new Error('Transaction not found');
+        }
+        await this.transaction.remove(transaction);
+        return transaction;
     }
 };
 TransactionsService = __decorate([

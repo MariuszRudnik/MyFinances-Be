@@ -22,7 +22,15 @@ export declare class TransactionsController {
         pagesCount: number;
     }>;
     findTransactionInAMonth(createTransactionDto: CreateTransactionDto, numberOfWallet: number, month: number, year: number, request: Request): Promise<any[]>;
+    findSumOfTheAMonth(createTransactionDto: CreateTransactionDto, numberOfWallet: number, month: number, year: number, request: Request): Promise<{
+        data: {
+            type: string;
+            sum: number;
+        }[];
+        theOldestDate: Date;
+        theNewDate: Date;
+    }>;
     findOne(id: string): string;
     update(id: string, updateTransactionDto: UpdateTransactionDto): string;
-    remove(id: string): string;
+    remove(id: string, request: Request, numberOfWallet: number): Promise<any>;
 }

@@ -81,6 +81,22 @@ export class TransactionsController {
       year,
     );
   }
+  @Get('get-sum/:numberOfWallet/:month/:year')
+  findSumOfTheAMonth(
+    @Body() createTransactionDto: CreateTransactionDto,
+    @Param('numberOfWallet') numberOfWallet: number,
+    @Param('month') month: number,
+    @Param('year') year: number,
+    @Req() request: Request,
+  ) {
+    return this.transactionsService.findSumOfTheMonth(
+      createTransactionDto,
+      numberOfWallet,
+      request,
+      month,
+      year,
+    );
+  }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
@@ -95,8 +111,12 @@ export class TransactionsController {
     return this.transactionsService.update(+id, updateTransactionDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.transactionsService.remove(+id);
+  @Delete(':numberOfWallet/:id')
+  remove(
+    @Param('id') id: string,
+    @Req() request: Request,
+    @Param('numberOfWallet') numberOfWallet: number,
+  ) {
+    return this.transactionsService.remove(id, request, numberOfWallet);
   }
 }

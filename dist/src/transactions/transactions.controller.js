@@ -35,14 +35,17 @@ let TransactionsController = class TransactionsController {
     findTransactionInAMonth(createTransactionDto, numberOfWallet, month, year, request) {
         return this.transactionsService.findTransactionInAMonth(createTransactionDto, numberOfWallet, request, month, year);
     }
+    findSumOfTheAMonth(createTransactionDto, numberOfWallet, month, year, request) {
+        return this.transactionsService.findSumOfTheMonth(createTransactionDto, numberOfWallet, request, month, year);
+    }
     findOne(id) {
         return this.transactionsService.findOne(+id);
     }
     update(id, updateTransactionDto) {
         return this.transactionsService.update(+id, updateTransactionDto);
     }
-    remove(id) {
-        return this.transactionsService.remove(+id);
+    remove(id, request, numberOfWallet) {
+        return this.transactionsService.remove(id, request, numberOfWallet);
     }
 };
 __decorate([
@@ -87,6 +90,17 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], TransactionsController.prototype, "findTransactionInAMonth", null);
 __decorate([
+    (0, common_1.Get)('get-sum/:numberOfWallet/:month/:year'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Param)('numberOfWallet')),
+    __param(2, (0, common_1.Param)('month')),
+    __param(3, (0, common_1.Param)('year')),
+    __param(4, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_transaction_dto_1.CreateTransactionDto, Number, Number, Number, Object]),
+    __metadata("design:returntype", void 0)
+], TransactionsController.prototype, "findSumOfTheAMonth", null);
+__decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -102,10 +116,12 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], TransactionsController.prototype, "update", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
+    (0, common_1.Delete)(':numberOfWallet/:id'),
     __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Req)()),
+    __param(2, (0, common_1.Param)('numberOfWallet')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, Object, Number]),
     __metadata("design:returntype", void 0)
 ], TransactionsController.prototype, "remove", null);
 TransactionsController = __decorate([
