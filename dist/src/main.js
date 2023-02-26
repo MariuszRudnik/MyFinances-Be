@@ -5,6 +5,8 @@ const app_module_1 = require("./app.module");
 const common_1 = require("@nestjs/common");
 const cookieParser = require("cookie-parser");
 const swagger_1 = require("@nestjs/swagger");
+const dotenv_1 = require("dotenv");
+(0, dotenv_1.config)();
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.setGlobalPrefix('api');
