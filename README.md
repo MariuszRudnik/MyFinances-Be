@@ -43,7 +43,7 @@ MyFinances to projekt powstały z chęci stworzenia aplikacji  której sam potrz
     <li><a href="https://reactjs.org/">React.js</a></li>
   </ul>
 
-Użyte paczki
+Użyte paczki:
   <ul>
     <li><a href="https://redux.js.org/">Redux</a></li>
     <li><a href="https://reactrouter.com/en/main">React Router</a></li>
