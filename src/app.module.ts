@@ -6,11 +6,18 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { WalletModule } from './wallet/wallet.module';
 import { TransactionsModule } from './transactions/transactions.module';
-
+import { config } from 'dotenv';
+config();
 import ormconfig from './ormconfig';
 
 @Module({
-  imports: [UserModule, TypeOrmModule.forRoot(ormconfig), AuthModule, WalletModule, TransactionsModule],
+  imports: [
+    UserModule,
+    TypeOrmModule.forRoot(ormconfig),
+    AuthModule,
+    WalletModule,
+    TransactionsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
