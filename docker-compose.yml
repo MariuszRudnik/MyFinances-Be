@@ -8,17 +8,17 @@ services:
     volumes:
       - .:/app
     depends_on:
-      - db
+      - db2
 
-  db:
+  db2:
     image: mysql:5.7.22
     restart: always
     environment:
-      MYSQL_DATABASE: admin
+      MYSQL_DATABASE: root
       MYSQL_USER: root
       MYSQL_PASSWORD: root
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - .dbdata:/var/lib/mysql
     ports:
-      - 33068:3306
+      - 3306:3306

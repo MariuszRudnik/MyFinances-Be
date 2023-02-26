@@ -31,7 +31,7 @@ export class AuthService {
     const jwt = await this.jwtService.signAsync({ id: user.id });
 
     response.cookie('jwt', jwt, {
-      httpOnly: false,
+      httpOnly: true,
     });
     return user;
   }
@@ -48,19 +48,20 @@ export class AuthService {
       );
     }
 
-    if (body.password !== body.password_confirm) {
+    if (body.password !== body.passwordConfirm) {
       throw new BadRequestException('Password do not match!');
     }
     const hashed = await bcrypt.hash(body.password, 12);
 
     return this.userRepository.save({
-      first_name: body.first_name,
-      last_name: body.last_name,
+      firstName: body.firstName,
+      lastName: body.lastName,
       email: body.email,
       password: hashed,
       //TODO: delete password when I are finish !!
     });
   }
+
   async userData(request) {
     const cookie = request.cookies['jwt'];
     const data = await this.jwtService.verifyAsync(cookie);

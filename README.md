@@ -1,73 +1,144 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+<!-- Spis treści -->
+# :notebook_with_decorative_cover: Spis treści
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+- [Wstęp](#pushpin-wstęp)
+- [Opis projektu](#star2-opis-projektu)
+  * [Screenshoty](#camera-screenshoty)
+  * [Zastosowane technologie](#space_invader-zastosowane-technologie)
+  * [Funkcjonalności](#dart-funkcjonalności)
+  * [Konfiguracja projektu](#key-konfiguracja-projektu)
+  * [Kolorystyka](#art-kolorystyka)
+- [Uruchomienie projektu](#toolbox-uruchomienie-projektu)
+  * [Instalacja](#gear-instalacja)
+  * [Uruchomienie lokalne](#running-uruchomienie-lokalne)
+- [Przeznaczenie projektu](#eyes-przeznaczenie-projektu)
+- [Endpointy](#mailbox_with_mail-endpointy)
+- [Przyszłe aktualizacje](#compass-przyszłe-aktualizacje)
+- [Licencja](#warning-licencja)
+- [Backend](#small_red_triangle_down-backend)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+  
+<!-- Wstęp -->
+## :pushpin: Wstęp
 
-## Description
+MyFinances to projekt powstały ...
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Installation
+
+<!-- Screenshoty -->
+### :camera: Screenshoty
+
+<div align="center">
+  <img src="./img/screen1.png" alt="" />
+</div>
+
+<!-- Zastosowane technologie -->
+### :space_invader: Zastosowane technologie
+
+  Strona klienta
+  <ul>
+    <li><a href="https://www.typescriptlang.org/">Typescript</a></li>
+    <li><a href="https://reactjs.org/">React.js</a></li>
+  </ul>
+
+Użyte paczki
+  <ul>
+    <li><a href="https://redux.js.org/">Redux</a></li>
+    <li><a href="https://reactrouter.com/en/main">React Router</a></li>
+    <li><a href="https://formik.org/">Formik</a></li>
+    <li><a href="https://storybook.js.org/">Storybook</a></li>
+    <li><a href="https://styled-components.com/">Styled Components</a></li>
+  </ul>
+
+  Strona serwera
+  <ul>
+    <li><a href="https://www.typescriptlang.org/">Typescript</a></li>
+    <li><a href="https://nestjs.com/">Nest.js</a></li>
+  </ul>
+
+  Baza danych
+  <ul>
+    <li><a href="https://www.mysql.com/">MySQL</a></li>
+  </ul>
+
+<!-- Kolorystyka -->
+### :art: Kolorystyka
+
+| Color             | Hex  |
+| ----------------- |------|
+| Primary Color | bra  |
+| Secondary Color | brak |
+| Accent Color | brak |
+| Text Color | brak |
+
+<!-- Funkcjonalności -->
+### :dart: Funkcjonalności
+
+- Rejestrowanie użytkowników 
+- Zaimplemetowanie autoryzacji i autentykacji przy użyciu JWT
+- Aktualizowanie danych profilowych
+- Zaimplementowanie powiadomień mailowych z użyciem cron
+
+<!-- Konfiguracja projektu -->
+### :key: Konfiguracja projektu
+
+W celu prawidłowego skonfigurowania : xxxx
+
+<!-- Uruchomienie projektu -->
+## 	:toolbox: Uruchomienie projektu
+
+W tym projekcie domyślnym menadżerem paczek jest NPM.
+
+<!-- Instalacja -->
+### :gear: Instalacja
+
+W katalogu projektu zainstaluj niezbędne zależności i paczki za pomocą komendy:
 
 ```bash
-$ npm install
+  npm install
 ```
+<!-- Uruchomienie lokalne -->
+### :running: Uruchomienie lokalne
 
-## Running the app
+Uruchomienie aplikacji
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+  npm start
 ```
 
-## Test
+Zbudowanie wersji produkcyjnej aplikacji
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+  npm run build
 ```
 
-## Support
+<!-- Przeznaczenie projektu -->
+## :eyes: Przeznaczenie projektu
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Aplikacja pozwala w prosty sposób  : xxx
 
-## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+<!-- Endpointy -->
 
-## License
 
-Nest is [MIT licensed](LICENSE).
+
+<!-- Przyszłe aktualizacje -->
+## :compass: Przyszłe aktualizacje
+
+* [ ] widok RWD
+* [ ] dodanie testów jednostkowych i integracyjnych
+* [ ] zoptymalizowanie aplikacji
+
+<!-- Licencja -->
+## :warning: Licencja
+
+Distributed under the no License. See LICENSE.txt for more information.
+
+
+ 
+ 
+<!-- Backend -->
+## :small_red_triangle_down: Backend
+
+[Readme](https://github.com/sxx)
+

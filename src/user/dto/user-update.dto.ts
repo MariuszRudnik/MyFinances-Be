@@ -1,19 +1,19 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 export class UserUpdateDto {
   @ApiProperty({
     description: 'Name user',
-    example: 'Mariusz'
+    example: 'Mariusz',
   })
-  first_name?: string;
+  firstName?: string;
   @ApiProperty({
     description: 'Last name user',
-    example: 'Json'
+    example: 'Json',
   })
-  last_name?: string;
+  lastName?: string;
   @ApiProperty({
     description: 'Email user',
-    example: 'mariusz@wp.pl'
+    example: 'mariusz@wp.pl',
   })
   email?: string;
 }
