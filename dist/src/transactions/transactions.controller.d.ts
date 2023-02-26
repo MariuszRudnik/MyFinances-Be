@@ -1,6 +1,5 @@
 import { TransactionsService } from './transactions.service';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
-import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { Request } from 'express';
 export declare class TransactionsController {
     private readonly transactionsService;
@@ -31,6 +30,6 @@ export declare class TransactionsController {
         theNewDate: Date;
     }>;
     findOne(id: string): string;
-    update(id: string, updateTransactionDto: UpdateTransactionDto): string;
+    update(transactionDto: CreateTransactionDto, id: string, request: Request, numberOfWallet: number): Promise<any[]>;
     remove(id: string, request: Request, numberOfWallet: number): Promise<any>;
 }

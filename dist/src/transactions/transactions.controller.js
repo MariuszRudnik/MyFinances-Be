@@ -16,7 +16,6 @@ exports.TransactionsController = void 0;
 const common_1 = require("@nestjs/common");
 const transactions_service_1 = require("./transactions.service");
 const create_transaction_dto_1 = require("./dto/create-transaction.dto");
-const update_transaction_dto_1 = require("./dto/update-transaction.dto");
 const swagger_1 = require("@nestjs/swagger");
 const auth_guard_1 = require("../auth/guards/auth.guard");
 let TransactionsController = class TransactionsController {
@@ -41,8 +40,8 @@ let TransactionsController = class TransactionsController {
     findOne(id) {
         return this.transactionsService.findOne(+id);
     }
-    update(id, updateTransactionDto) {
-        return this.transactionsService.update(+id, updateTransactionDto);
+    update(transactionDto, id, request, numberOfWallet) {
+        return this.transactionsService.update(id, request, numberOfWallet, transactionDto);
     }
     remove(id, request, numberOfWallet) {
         return this.transactionsService.remove(id, request, numberOfWallet);
@@ -108,11 +107,13 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], TransactionsController.prototype, "findOne", null);
 __decorate([
-    (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
+    (0, common_1.Patch)(':numberOfWallet/:id'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Param)('id')),
+    __param(2, (0, common_1.Req)()),
+    __param(3, (0, common_1.Param)('numberOfWallet')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_transaction_dto_1.UpdateTransactionDto]),
+    __metadata("design:paramtypes", [create_transaction_dto_1.CreateTransactionDto, String, Object, Number]),
     __metadata("design:returntype", void 0)
 ], TransactionsController.prototype, "update", null);
 __decorate([

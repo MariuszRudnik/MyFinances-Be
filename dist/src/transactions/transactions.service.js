@@ -64,7 +64,6 @@ let TransactionsService = class TransactionsService {
             throw new common_1.BadRequestException('Something bad happened in category');
         }
         const date = data;
-        console.log(typeof data);
         const transaction = {
             nameOfTransactions: name,
             price,
@@ -238,8 +237,47 @@ let TransactionsService = class TransactionsService {
     findOne(id) {
         return `This action returns a #${id} transaction`;
     }
-    update(id, updateTransactionDto) {
-        return `This action updates a #${id} transaction`;
+    async update(id, request, numberOfWallet, transactionDto) {
+        const wallet = await this.wallet(transactionDto, numberOfWallet, request);
+        const transaction = await this.transaction.find({
+            where: {
+                id: id,
+                wallet: {
+                    id: wallet[0].id,
+                },
+            },
+        });
+        if (!transaction) {
+            throw new common_1.NotFoundException(`Transaction with id ${id} not found`);
+        }
+        if (transaction.length > 1) {
+            throw new Error('Something wrong');
+        }
+        const categories = await this.categoryRepository.find({
+            where: {
+                id: transactionDto.category,
+                wallet: {
+                    id: wallet[0].id,
+                },
+                parentCategory: {
+                    id: transactionDto.parentCategory,
+                },
+            },
+            relations: ['parentCategory'],
+        });
+        if (categories.length != 1) {
+            throw new Error('Something bad happened in category');
+        }
+        transaction[0].nameOfTransactions = transactionDto.name;
+        transaction[0].price = transactionDto.price;
+        transaction[0].dateExpenses = transactionDto.date;
+        transaction[0].description = transactionDto.description;
+        transaction[0].operations = transactionDto.operations;
+        transaction[0].description = transactionDto.description;
+        transaction[0].category = transactionDto.category;
+        transaction[0].parentCategory = transactionDto.parentCategory;
+        const updatedTransaction = await this.transaction.save(transaction);
+        return updatedTransaction;
     }
     async remove(id, request, numberOfWallet) {
         const cookie = request.cookies['jwt'];

@@ -103,12 +103,19 @@ export class TransactionsController {
     return this.transactionsService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Patch(':numberOfWallet/:id')
   update(
+    @Body() transactionDto: CreateTransactionDto,
     @Param('id') id: string,
-    @Body() updateTransactionDto: UpdateTransactionDto,
+    @Req() request: Request,
+    @Param('numberOfWallet') numberOfWallet: number,
   ) {
-    return this.transactionsService.update(+id, updateTransactionDto);
+    return this.transactionsService.update(
+      id,
+      request,
+      numberOfWallet,
+      transactionDto,
+    );
   }
 
   @Delete(':numberOfWallet/:id')

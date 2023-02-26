@@ -1,5 +1,4 @@
 import { CreateTransactionDto } from './dto/create-transaction.dto';
-import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { JwtService } from '@nestjs/jwt';
 import { WalletEntity } from '../wallet/entities/wallet.entity';
 import { Repository } from 'typeorm';
@@ -37,6 +36,6 @@ export declare class TransactionsService {
         theNewDate: Date;
     }>;
     findOne(id: number): string;
-    update(id: number, updateTransactionDto: UpdateTransactionDto): string;
+    update(id: any, request: any, numberOfWallet: any, transactionDto: any): Promise<any[]>;
     remove(id: string, request: any, numberOfWallet: any): Promise<any>;
 }
