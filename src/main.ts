@@ -13,7 +13,7 @@ async function bootstrap() {
   app.use(cookieParser());
   app.enableCors({
     credentials: true,
-    origin: ['https://my-finance-fe-git-develop-mariuszrudnik.vercel.app'],
+    origin: ['https://my-finance-fe-git-develop-mariuszrudnik.vercel.app/'],
   });
 
   const config = new DocumentBuilder()
