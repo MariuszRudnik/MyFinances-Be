@@ -12,8 +12,8 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
   app.enableCors(
-      {origin: 'http://localhost:3000',
-
+      {
+        origin: ['http://localhost:3000', 'https://my-finance-fe.vercel.app']
   });
 
   const config = new DocumentBuilder()
