@@ -13,9 +13,7 @@ async function bootstrap() {
   app.use(cookieParser());
   app.enableCors(
       {
-        origin: '*',
-        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-        credentials: true,
+        origin: ['http://localhost:3000', 'https://my-finance-fe.vercel.app']
   });
 
   const config = new DocumentBuilder()
