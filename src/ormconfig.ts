@@ -1,17 +1,17 @@
-import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
-const config: MysqlConnectionOptions = {
-  type: 'mysql',
-  host: process.env.DATABASE_HOST,
-  port: parseInt(process.env.DATABASE_PORT),
-  username: process.env.DATABASE_USERNAME,
-  password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE_NAME,
+const config:TypeOrmModuleOptions = {
+  type: 'postgres',
+  host: process.env.POSTGRES_HOST,
+  port: 5432,
+  username: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  database: process.env.POSTGRES_DATABASE,
   entities: [__dirname + '/**/*.entity{.ts,.js}'],
-  synchronize: false,
+  synchronize: true,
   ssl: {
     rejectUnauthorized: false,
-  },
-};
+  }
+}
 
 export default config;
